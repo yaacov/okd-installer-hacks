@@ -7,7 +7,6 @@ $ sudo iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 165
 ```
 
 ```
-$ # add kubernetes config to local config
 $ # add to /etc/hosts
 192.168.126.11 test1-api.tt.testing
 192.168.126.51 console-openshift-console.apps.test1.tt.testing
