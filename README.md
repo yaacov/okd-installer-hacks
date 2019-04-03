@@ -86,7 +86,7 @@ https://console-openshift-console.apps.test1.tt.testing
 
 ## special user kubeadmin and password written in file
 ```
-oc login -u kubeadmin -p $(cat mycluster/auth/kubeadmin-password) --insecure-skip-tls-verify=true --certificate-authority=/home/yzamir/.ssh/id_rsa.pub
+oc login -u kubeadmin -p $(cat mycluster/auth/kubeadmin-password) --insecure-skip-tls-verify=true
 ```
 
 # install kubevirt
