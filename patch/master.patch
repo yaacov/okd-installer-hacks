@@ -1,0 +1,62 @@
+diff --git a/data/data/libvirt/main.tf b/data/data/libvirt/main.tf
+index f5e6e7304..f25f3371e 100644
+--- a/data/data/libvirt/main.tf
++++ b/data/data/libvirt/main.tf
+@@ -53,6 +53,7 @@ resource "libvirt_network" "net" {
+       data.libvirt_network_dns_host_template.bootstrap.*.rendered,
+       data.libvirt_network_dns_host_template.masters.*.rendered,
+       data.libvirt_network_dns_host_template.etcds.*.rendered,
++      data.libvirt_network_dns_host_template.auth.*.rendered,
+     ))}"]
+   }]
+ 
+@@ -107,6 +108,12 @@ data "libvirt_network_dns_host_template" "etcds" {
+   hostname = "etcd-${count.index}.${var.cluster_domain}"
+ }
+ 
++data "libvirt_network_dns_host_template" "auth" {
++  count    = "${var.master_count}"
++  ip       = "${var.libvirt_auth_ip}"
++  hostname = "openshift-authentication-openshift-authentication.apps.${var.cluster_domain}"
++}
++
+ data "libvirt_network_dns_srv_template" "etcd_cluster" {
+   count    = "${var.master_count}"
+   service  = "etcd-server-ssl"
+diff --git a/data/data/libvirt/variables-libvirt.tf b/data/data/libvirt/variables-libvirt.tf
+index cea25a520..8a8a6a81a 100644
+--- a/data/data/libvirt/variables-libvirt.tf
++++ b/data/data/libvirt/variables-libvirt.tf
+@@ -28,6 +28,12 @@ variable "libvirt_master_ips" {
+   description = "the list of desired master ips. Must match master_count"
+ }
+ 
++variable "libvirt_auth_ip" {
++  type        = "string"
++  description = "node with authentication server ip"
++  default     = "192.168.126.51"
++}
++
+ # It's definitely recommended to bump this if you can.
+ variable "libvirt_master_memory" {
+   type        = "string"
+diff --git a/pkg/tfvars/libvirt/libvirt.go b/pkg/tfvars/libvirt/libvirt.go
+index dc9710fa1..bb36cacba 100644
+--- a/pkg/tfvars/libvirt/libvirt.go
++++ b/pkg/tfvars/libvirt/libvirt.go
+@@ -17,6 +17,7 @@ type config struct {
+ 	IfName      string   `json:"libvirt_network_if"`
+ 	MasterIPs   []string `json:"libvirt_master_ips,omitempty"`
+ 	BootstrapIP string   `json:"libvirt_bootstrap_ip,omitempty"`
++	AuthNodeIP  string   `json:"libvirt_auth_ip,omitempty"`
+ }
+ 
+ // TFVars generates libvirt-specific Terraform variables.
+@@ -42,6 +43,7 @@ func TFVars(masterConfig *v1alpha1.LibvirtMachineProviderConfig, osImage string,
+ 		IfName:      bridge,
+ 		BootstrapIP: bootstrapIP.String(),
+ 		MasterIPs:   masterIPs,
++		AuthNodeIP: "192.168.126.51",
+ 	}
+ 
+ 	return json.MarshalIndent(cfg, "", "  ")
