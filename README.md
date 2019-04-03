@@ -15,33 +15,33 @@ $ # add to /etc/hosts
 192.168.126.51 openshift-authentication-openshift-authentication.apps.test1.tt.testing
 ```
 
-# Route all via localhost [ If you want to ... ]
+## Route all via localhost [ If you want to ... ]
 ```
 $ # let oc have supercow powers: open lower then 1024 net sockets
 $ sudo setcap CAP_NET_BIND_SERVICE=+eip $(which oc)
 $ oc -n openshift-ingress port-forward svc/router-default 443
 ```
 
-# Patchs for installer
+## Patchs for installer
 https://github.com/yaacov/okd-installer-hacks/blob/master/patch/master.patch
 
 https://github.com/cynepco3hahue/installer-in-container/blob/master/images/installer
 https://github.com/cynepco3hahue/installer-in-container/blob/master/images/installer/hacks/v0.14.0
 
-## Apply patch and compile
+#### Apply patch and compile
 ```
 git apply [currect patch to].patch
 TAGS=libvirt hack/build.sh
 ```
 -------------------------------------------
 
-## Cleanup
+#### Cleanup
 ```
 rm -rf mycluster/
 ./scripts/maintenance/virsh-cleanup.sh
 ```
 
-# Run installer.
+## Run installer.
 ```
 # env TF_VAR_libvirt_master_memory=16384 ./bin/openshift-install create cluster --dir=mycluster --log-level debug
 ./bin/openshift-install create cluster --dir=mycluster --log-level debug
@@ -67,7 +67,7 @@ rm -rf mycluster/
 ```
 
 
-## Use config.
+#### Use config.
 ```
 cp mycluster/auth/kubeconfig ~/.kube/config
 
@@ -76,20 +76,25 @@ oc get nodes -A -o wide
 oc get svc -A
 ```
 
-# Re new certificate
+## Re new certificate
 ```
 kubectl get csr | xargs kubectl certificate approve
 ```
 
-# Browse
+## Browse
 https://console-openshift-console.apps.test1.tt.testing
 
-## special user kubeadmin and password written in file
+#### Copy kube config
+```
+cp mycluster/auth/kubeconfig ~/.kube/config
+```
+
+#### special user kubeadmin and password written in file
 ```
 oc login -u kubeadmin -p $(cat mycluster/auth/kubeadmin-password) --insecure-skip-tls-verify=true
 ```
 
-# install kubevirt
+## install kubevirt
 ```
 $ export VERSION=v0.14.0
 $ kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/$VERSION/kubevirt-operator.yaml
