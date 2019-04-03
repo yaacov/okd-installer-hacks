@@ -76,7 +76,12 @@ oc get nodes -A -o wide
 oc get svc -A
 ```
 
-## Re new certificate
+#### special user kubeadmin and password written in file
+```
+oc login -u kubeadmin -p $(cat mycluster/auth/kubeadmin-password) --insecure-skip-tls-verify=true
+```
+
+## Re-new certificate [ If they get lost ... ]
 ```
 kubectl get csr | xargs kubectl certificate approve
 ```
@@ -84,19 +89,9 @@ kubectl get csr | xargs kubectl certificate approve
 ## Browse
 https://console-openshift-console.apps.test1.tt.testing
 
-#### Copy kube config
-```
-cp mycluster/auth/kubeconfig ~/.kube/config
-```
-
-#### special user kubeadmin and password written in file
-```
-oc login -u kubeadmin -p $(cat mycluster/auth/kubeadmin-password) --insecure-skip-tls-verify=true
-```
-
 ## install kubevirt
 ```
-$ export VERSION=v0.14.0
+$ export VERSION=v0.15.0
 $ kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/$VERSION/kubevirt-operator.yaml
 $ kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/$VERSION/kubevirt-cr.yaml
 ```
