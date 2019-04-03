@@ -22,7 +22,16 @@ $ sudo setcap CAP_NET_BIND_SERVICE=+eip $(which oc)
 $ oc -n openshift-ingress port-forward svc/router-default 443
 ```
 
-## Patchs for installer
+## Patchs and build the installer
+
+#### Cleanup last try
+```
+rm -rf mycluster/
+./scripts/maintenance/virsh-cleanup.sh
+```
+
+#### Get a patch
+
 https://github.com/yaacov/okd-installer-hacks/blob/master/patch/master.patch
 
 https://github.com/cynepco3hahue/installer-in-container/blob/master/images/installer
@@ -34,12 +43,6 @@ git apply [currect patch to].patch
 TAGS=libvirt hack/build.sh
 ```
 -------------------------------------------
-
-#### Cleanup
-```
-rm -rf mycluster/
-./scripts/maintenance/virsh-cleanup.sh
-```
 
 ## Run installer.
 ```
