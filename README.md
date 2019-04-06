@@ -69,6 +69,28 @@ TAGS=libvirt hack/build.sh
 	You can get this secret from https://cloud.openshift.com/clusters/install#pull-secret
 ```
 
+#### Set DHCP and static IP's for master and worker
+
+```
+# get mac address of test nodes
+virsh list --name | grep master | xargs virsh dumpxml | grep "mac address" | cut -d"'" -f 2
+virsh list --name | grep worker | xargs virsh dumpxml | grep "mac address" | cut -d"'" -f 2
+
+# edit network dhcp
+virsh net-list --name | grep test | xargs virsh net-edit
+```
+
+And add dd static ip's:
+
+```
+ <ip family='ipv4' address='192.168.126.1' prefix='24'>
+    <dhcp>
+      <range start='192.168.126.100' end='192.168.126.254'/>
+      <host mac='66:4f:16:3f:5f:0f' name='master' ip='192.168.126.11'/>
+      <host mac='6a:bd:3a:d7:aa:bb' name='worker' ip='192.168.126.51'/>
+    </dhcp>
+  </ip>
+```
 
 #### Use config.
 ```
@@ -92,7 +114,7 @@ kubectl get csr | xargs kubectl certificate approve
 ## Browse
 https://console-openshift-console.apps.test1.tt.testing
 
-## install kubevirt
+## Install kubevirt
 ```
 $ export VERSION=v0.15.0
 $ kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/$VERSION/kubevirt-operator.yaml
