@@ -80,7 +80,7 @@ virsh list --name | grep worker | xargs virsh dumpxml | grep "mac address" | cut
 virsh net-list --name | grep test | xargs virsh net-edit
 ```
 
-And add dd static ip's:
+And add static ip's:
 
 ```
  <ip family='ipv4' address='192.168.126.1' prefix='24'>
