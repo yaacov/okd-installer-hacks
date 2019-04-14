@@ -1,16 +1,16 @@
 diff --git a/data/data/libvirt/main.tf b/data/data/libvirt/main.tf
-index f5e6e7304..f25f3371e 100644
+index 4013ed0ec..43411ab35 100644
 --- a/data/data/libvirt/main.tf
 +++ b/data/data/libvirt/main.tf
-@@ -53,6 +53,7 @@ resource "libvirt_network" "net" {
-       data.libvirt_network_dns_host_template.bootstrap.*.rendered,
+@@ -55,6 +55,7 @@ resource "libvirt_network" "net" {
        data.libvirt_network_dns_host_template.masters.*.rendered,
+       data.libvirt_network_dns_host_template.masters_int.*.rendered,
        data.libvirt_network_dns_host_template.etcds.*.rendered,
 +      data.libvirt_network_dns_host_template.auth.*.rendered,
      ))}"]
    }]
  
-@@ -107,6 +108,12 @@ data "libvirt_network_dns_host_template" "etcds" {
+@@ -121,6 +122,12 @@ data "libvirt_network_dns_host_template" "etcds" {
    hostname = "etcd-${count.index}.${var.cluster_domain}"
  }
  
@@ -24,11 +24,11 @@ index f5e6e7304..f25f3371e 100644
    count    = "${var.master_count}"
    service  = "etcd-server-ssl"
 diff --git a/data/data/libvirt/variables-libvirt.tf b/data/data/libvirt/variables-libvirt.tf
-index cea25a520..8a8a6a81a 100644
+index cea25a520..f8f763803 100644
 --- a/data/data/libvirt/variables-libvirt.tf
 +++ b/data/data/libvirt/variables-libvirt.tf
-@@ -28,6 +28,12 @@ variable "libvirt_master_ips" {
-   description = "the list of desired master ips. Must match master_count"
+@@ -23,6 +23,12 @@ variable "libvirt_bootstrap_ip" {
+   description = "the desired bootstrap ip"
  }
  
 +variable "libvirt_auth_ip" {
@@ -37,11 +37,11 @@ index cea25a520..8a8a6a81a 100644
 +  default     = "192.168.126.51"
 +}
 +
- # It's definitely recommended to bump this if you can.
- variable "libvirt_master_memory" {
-   type        = "string"
+ variable "libvirt_master_ips" {
+   type        = "list"
+   description = "the list of desired master ips. Must match master_count"
 diff --git a/pkg/tfvars/libvirt/libvirt.go b/pkg/tfvars/libvirt/libvirt.go
-index dc9710fa1..bb36cacba 100644
+index dc9710fa1..88603f4f7 100644
 --- a/pkg/tfvars/libvirt/libvirt.go
 +++ b/pkg/tfvars/libvirt/libvirt.go
 @@ -17,6 +17,7 @@ type config struct {
@@ -56,7 +56,7 @@ index dc9710fa1..bb36cacba 100644
  		IfName:      bridge,
  		BootstrapIP: bootstrapIP.String(),
  		MasterIPs:   masterIPs,
-+		AuthNodeIP: "192.168.126.51",
++		AuthNodeIP:  "192.168.126.51",
  	}
  
  	return json.MarshalIndent(cfg, "", "  ")
