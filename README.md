@@ -111,6 +111,29 @@ oc login -u kubeadmin -p $(cat mycluster/auth/kubeadmin-password) --insecure-ski
 kubectl get csr | xargs kubectl certificate approve
 ```
 
+/etc/systemd/system/dirty-auto-approver.service
+```
+[Unit]
+Description=Approves pending csrs. Prints into /tmp/dirty-approves file
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '/bin/kubectl certificate approve $(/bin/kubectl get csr --name) 2>&1 >> /tmp/dirty-approves'
+```
+
+/etc/systemd/system/dirty-auto-approver.timer
+```
+[Unit]
+Description=Run dirty-auto-approver every hour
+Unit=dirty-auto-approver.service
+
+[Timer]
+OnCalendar=*:0/5:0
+
+[Install]
+WantedBy=multi-user.target
+```
+
 ## Browse
 https://console-openshift-console.apps.test1.tt.testing
 
