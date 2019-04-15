@@ -118,7 +118,7 @@ Description=Approves pending csrs. Prints into /tmp/dirty-approves file
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c '/bin/kubectl certificate approve $(/bin/kubectl get csr --name) 2>&1 >> /tmp/dirty-approves'
+ExecStart=/bin/sh -c '/bin/kubectl certificate approve $(/bin/kubectl get csr -o name) 2>&1 >> /tmp/dirty-approves'
 ```
 
 /etc/systemd/system/dirty-auto-approver.timer
