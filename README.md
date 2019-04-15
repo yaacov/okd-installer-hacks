@@ -133,6 +133,9 @@ OnCalendar=*:0/5:0
 [Install]
 WantedBy=multi-user.target
 ```
+```
+systemctl enable --now dirty-auto-approver.timer
+```
 
 ## Browse
 https://console-openshift-console.apps.test1.tt.testing
