@@ -1,5 +1,17 @@
 # Copy installed OKD4 from one machine to another
 
+## Reference:
+https://github.com/openshift/installer - openshift installer.
+
+https://github.com/cynepco3hahue/installer-in-container - How to run installer on local machine.
+https://github.com/code-ready/osp4 - How to create and run openshift VM's on a new machiine.
+
+Scripts based on:
+
+https://github.com/cynepco3hahue/installer-in-container/tree/master/images/libvirt - recipe for building installer with libvirt support.
+
+https://github.com/code-ready/osp4/blob/master/libvirt/crc_libvirt.sh - script to start the code-ready VM's.
+
 ## Install a working okd4 on a machine
 
 Compile and run the installer:
@@ -7,6 +19,7 @@ Compile and run the installer:
 TAGS=libvirt hack/build.sh
 ./bin/openshift-install create cluster --dir=mycluster --log-level debug
 ```
+
 Wait for installer to finish, and check all is ok:
 ```
 oc get pods --all-namespaces 
