@@ -1,3 +1,34 @@
+diff --git a/cmd/openshift-install/create.go b/cmd/openshift-install/create.go
+index d267e1b24..19238b3d8 100644
+--- a/cmd/openshift-install/create.go
++++ b/cmd/openshift-install/create.go
+@@ -238,7 +238,7 @@ func waitForBootstrapComplete(ctx context.Context, config *rest.Config, director
+ 
+ 	discovery := client.Discovery()
+ 
+-	apiTimeout := 30 * time.Minute
++	apiTimeout := 60 * time.Minute
+ 	logrus.Infof("Waiting up to %v for the Kubernetes API at %s...", apiTimeout, config.Host)
+ 	apiContext, cancel := context.WithTimeout(ctx, apiTimeout)
+ 	defer cancel()
+@@ -279,7 +279,7 @@ func waitForBootstrapComplete(ctx context.Context, config *rest.Config, director
+ // and waits for the bootstrap configmap to report that bootstrapping has
+ // completed.
+ func waitForBootstrapConfigMap(ctx context.Context, client *kubernetes.Clientset) error {
+-	timeout := 30 * time.Minute
++	timeout := 60 * time.Minute
+ 	logrus.Infof("Waiting up to %v for bootstrapping to complete...", timeout)
+ 
+ 	waitCtx, cancel := context.WithTimeout(ctx, timeout)
+@@ -317,7 +317,7 @@ func waitForBootstrapConfigMap(ctx context.Context, client *kubernetes.Clientset
+ // waitForInitializedCluster watches the ClusterVersion waiting for confirmation
+ // that the cluster has been initialized.
+ func waitForInitializedCluster(ctx context.Context, config *rest.Config) error {
+-	timeout := 30 * time.Minute
++	timeout := 60 * time.Minute
+ 	logrus.Infof("Waiting up to %v for the cluster at %s to initialize...", timeout, config.Host)
+ 	cc, err := configclient.NewForConfig(config)
+ 	if err != nil {
 diff --git a/data/data/libvirt/main.tf b/data/data/libvirt/main.tf
 index 4013ed0ec..43411ab35 100644
 --- a/data/data/libvirt/main.tf
@@ -24,11 +55,11 @@ index 4013ed0ec..43411ab35 100644
    count    = "${var.master_count}"
    service  = "etcd-server-ssl"
 diff --git a/data/data/libvirt/variables-libvirt.tf b/data/data/libvirt/variables-libvirt.tf
-index cea25a520..f8f763803 100644
+index cea25a520..8a8a6a81a 100644
 --- a/data/data/libvirt/variables-libvirt.tf
 +++ b/data/data/libvirt/variables-libvirt.tf
-@@ -23,6 +23,12 @@ variable "libvirt_bootstrap_ip" {
-   description = "the desired bootstrap ip"
+@@ -28,6 +28,12 @@ variable "libvirt_master_ips" {
+   description = "the list of desired master ips. Must match master_count"
  }
  
 +variable "libvirt_auth_ip" {
@@ -37,11 +68,28 @@ index cea25a520..f8f763803 100644
 +  default     = "192.168.126.51"
 +}
 +
- variable "libvirt_master_ips" {
-   type        = "list"
-   description = "the list of desired master ips. Must match master_count"
+ # It's definitely recommended to bump this if you can.
+ variable "libvirt_master_memory" {
+   type        = "string"
+diff --git a/pkg/asset/tls/tls.go b/pkg/asset/tls/tls.go
+index 076f34497..dddac2374 100644
+--- a/pkg/asset/tls/tls.go
++++ b/pkg/asset/tls/tls.go
+@@ -22,10 +22,10 @@ const (
+ 	keySize = 2048
+ 
+ 	// ValidityOneDay sets the validity of a cert to 24 hours.
+-	ValidityOneDay = time.Hour * 24
++	ValidityOneDay = time.Hour * 24 * 365
+ 
+ 	// ValidityOneYear sets the validity of a cert to 1 year.
+-	ValidityOneYear = ValidityOneDay * 365
++	ValidityOneYear = time.Hour * 24 * 365
+ 
+ 	// ValidityTenYears sets the validity of a cert to 10 years.
+ 	ValidityTenYears = ValidityOneYear * 10
 diff --git a/pkg/tfvars/libvirt/libvirt.go b/pkg/tfvars/libvirt/libvirt.go
-index dc9710fa1..88603f4f7 100644
+index dc9710fa1..bb36cacba 100644
 --- a/pkg/tfvars/libvirt/libvirt.go
 +++ b/pkg/tfvars/libvirt/libvirt.go
 @@ -17,6 +17,7 @@ type config struct {
@@ -56,7 +104,7 @@ index dc9710fa1..88603f4f7 100644
  		IfName:      bridge,
  		BootstrapIP: bootstrapIP.String(),
  		MasterIPs:   masterIPs,
-+		AuthNodeIP:  "192.168.126.51",
++		AuthNodeIP: "192.168.126.51",
  	}
  
  	return json.MarshalIndent(cfg, "", "  ")
