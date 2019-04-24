@@ -39,14 +39,22 @@ worker =  [conn.lookupByID(i) for i in domainIDs if 'worker' in conn.lookupByID(
 # edit master
 raw_xml = master.XMLDesc(0)
 master_xml = minidom.parseString(raw_xml)
-domainTypes = master_xml.getElementsByTagName('type')
-domainTypes[0].setAttribute('machine', 'pc')
+# domainTypes = master_xml.getElementsByTagName('type')
+# domainTypes[0].setAttribute('machine', 'pc')
 
 # edit worker
 raw_xml = worker.XMLDesc(0)
 worker_xml = minidom.parseString(raw_xml)
-domainTypes = worker_xml.getElementsByTagName('type')
-domainTypes[0].setAttribute('machine', 'pc')
+# domainTypes = worker_xml.getElementsByTagName('type')
+# domainTypes[0].setAttribute('machine', 'pc')
+
+# edit network
+raw_xml = net.XMLDesc(0)
+net_xml = minidom.parseString(raw_xml)
+
+# edit pool
+raw_xml = pool.XMLDesc(0)
+pool_xml = minidom.parseString(raw_xml)
 
 # ---------------------
 
@@ -63,14 +71,8 @@ with open('worker', 'w') as the_file:
     the_file.write(worker.name())
 
 # dumpxml
-raw_xml = pool.XMLDesc(0)
-pool_xml = minidom.parseString(raw_xml)
 dumpxml('pool.xml', pool_xml)
-
-raw_xml = net.XMLDesc(0)
-net_xml = minidom.parseString(raw_xml)
 dumpxml('net.xml', net_xml)
-
 dumpxml('master.xml', master_xml)
 dumpxml('worker.xml', worker_xml)
 
