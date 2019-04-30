@@ -12,7 +12,7 @@ $ # add to /etc/hosts
 192.168.126.51 console-openshift-console.apps.test1.tt.testing
 192.168.126.51 grafana-openshift-monitoring.apps.test1.tt.testing
 192.168.126.51 prometheus-k8s-openshift-monitoring.apps.test1.tt.testing
-192.168.126.51 openshift-authentication-openshift-authentication.apps.test1.tt.testing
+192.168.126.51 integrated-oauth-server-openshift-authentication.apps.test1.tt.testing
 ```
 
 ## Route all via localhost [ If you want to ... ]
