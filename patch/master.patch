@@ -48,7 +48,7 @@ index 4013ed0ec..43411ab35 100644
 +data "libvirt_network_dns_host_template" "auth" {
 +  count    = "${var.master_count}"
 +  ip       = "${var.libvirt_auth_ip}"
-+  hostname = "oauth-openshift:.apps.${var.cluster_domain}"
++  hostname = "oauth-openshift.apps.${var.cluster_domain}"
 +}
 +
  data "libvirt_network_dns_srv_template" "etcd_cluster" {
