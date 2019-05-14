@@ -8,18 +8,15 @@ $ sudo iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 165
 
 ```
 $ # add to /etc/hosts
-192.168.126.11 test1-api.tt.testing
-192.168.126.51 console-openshift-console.apps.test1.tt.testing
-192.168.126.51 grafana-openshift-monitoring.apps.test1.tt.testing
-192.168.126.51 prometheus-k8s-openshift-monitoring.apps.test1.tt.testing
-192.168.126.51 integrated-oauth-server-openshift-authentication.apps.test1.tt.testing
-```
+192.168.126.11 api.test1.tt.testing
 
-## Route all via localhost [ If you want to ... ]
-```
-$ # let oc have supercow powers: open lower then 1024 net sockets
-$ sudo setcap CAP_NET_BIND_SERVICE=+eip $(which oc)
-$ oc -n openshift-ingress port-forward svc/router-default 443
+192.168.126.51 kubevirt-web-ui.apps.test1.tt.testing
+192.168.126.51 oauth-openshift.apps.test1.tt.testing 
+192.168.126.51 console-openshift-console.apps.test1.tt.testing
+192.168.126.51 downloads-openshift-console.apps.test1.tt.testing
+192.168.126.51 alertmanager-main-openshift-monitoring.apps.test1.tt.testing
+192.168.126.51 grafana-openshift-monitoring.apps.test1.tt.testing
+192.168.126.51 prometheus-k8s-openshift-monitoring.apps.test1.tt.testing  
 ```
 
 ## Patchs and build the installer
@@ -34,12 +31,16 @@ rm -rf mycluster/
 
 https://github.com/yaacov/okd-installer-hacks/blob/master/patch/master.patch
 
+Ref:
+
 https://github.com/cynepco3hahue/installer-in-container/blob/master/images/installer
+
 https://github.com/cynepco3hahue/installer-in-container/blob/master/images/installer/hacks/v0.14.0
 
 #### Apply patch and compile
 ```
-git apply [currect patch to].patch
+curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/patch/master.patch | git apply -
+
 TAGS=libvirt hack/build.sh
 ```
 -------------------------------------------
@@ -92,7 +93,7 @@ And add static ip's:
   </ip>
 ```
 
-#### Use config.
+#### Set kubeconfig
 ```
 cp mycluster/auth/kubeconfig ~/.kube/config
 
@@ -106,44 +107,14 @@ oc get svc -A
 oc login -u kubeadmin -p $(cat mycluster/auth/kubeadmin-password) --insecure-skip-tls-verify=true
 ```
 
-## Re-new certificate [ If they get lost ... ]
-```
-kubectl get csr | xargs kubectl certificate approve
-```
-
-/etc/systemd/system/dirty-auto-approver.service
-```
-[Unit]
-Description=Approves pending csrs. Prints into /tmp/dirty-approves file
-
-[Service]
-Type=oneshot
-ExecStart=/bin/sh -c '/bin/kubectl certificate approve $(/bin/kubectl get csr -o name) 2>&1 >> /tmp/dirty-approves'
-```
-
-/etc/systemd/system/dirty-auto-approver.timer
-```
-[Unit]
-Description=Run dirty-auto-approver every hour
-Unit=dirty-auto-approver.service
-
-[Timer]
-OnCalendar=*:0/5:0
-
-[Install]
-WantedBy=multi-user.target
-```
-```
-systemctl enable --now dirty-auto-approver.timer
-```
-
 ## Browse
 https://console-openshift-console.apps.test1.tt.testing
 
 ## Install kubevirt
 ```
-$ export VERSION=v0.15.0
-$ kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/$VERSION/kubevirt-operator.yaml
-$ kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/$VERSION/kubevirt-cr.yaml
+$ export VERSION=v0.17.0
+$ kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/$VERSION/kubevirt.yaml
 ```
 
+## set KVM to work with nested virtualization 
+edit `/etc/modprobe.d/kvm.conf` and add `options kvm_intel nested=1`
