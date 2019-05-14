@@ -118,3 +118,5 @@ $ kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/$VERSI
 
 ## set KVM to work with nested virtualization 
 edit `/etc/modprobe.d/kvm.conf` and add `options kvm_intel nested=1`
+
+reboot, and use `virt-host-validate` to check virtuslization status.
