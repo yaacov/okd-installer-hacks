@@ -112,8 +112,11 @@ https://console-openshift-console.apps.test1.tt.testing
 
 ## Install kubevirt
 ```
-$ export VERSION=v0.17.0
-$ kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/$VERSION/kubevirt.yaml
+export RELEASE=v0.17.0
+kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt.yaml
+kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-operator.yaml
+kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-cr.yaml
+
 ```
 
 ## set KVM to work with nested virtualization 
