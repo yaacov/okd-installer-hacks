@@ -160,4 +160,6 @@ sudo virsh pool-autostart default
 echo -e "[main]\ndns=dnsmasq" | sudo tee /etc/NetworkManager/conf.d/openshift.conf
 echo server=/tt.testing/192.168.126.1 | sudo tee /etc/NetworkManager/dnsmasq.d/openshift.conf
 
+sudo systemctl reload NetworkManager
+
 ```
