@@ -123,3 +123,37 @@ kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEAS
 edit `/etc/modprobe.d/kvm.conf` and add `options kvm_intel nested=1`
 
 reboot, and use `virt-host-validate` to check virtuslization status.
+
+## Detailed requirements
+```
+dnf install golang-bin gcc-c++ libvirt-devel
+go get -u github.com/golang/dep/cmd/dep
+
+# ls -l /dev/kvm 
+sudo dnf install libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm
+sudo systemctl enable --now libvirtd
+
+sudo vim /etc/libvirt/libvirtd.conf
+sudo vim /etc/sysconfig/libvirtd
+
+# virsh --connect qemu:///system net-dumpxml default
+sudo iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
+   
+sudo firewall-cmd --add-rich-rule "rule service name="libvirt" reject" --permanent
+sudo firewall-cmd --zone=dmz --add-service=libvirt --permanent
+sudo firewall-cmd --zone=dmz --change-interface=tt0  --permanent
+sudo firewall-cmd --zone=dmz --change-interface=virbr0  --permanent
+
+virsh --connect qemu:///system pool-list
+sudo virsh pool-define /dev/stdin <<EOF
+<pool type='dir'>
+  <name>default</name>
+  <target>
+    <path>/var/lib/libvirt/images</path>
+  </target>
+</pool>
+EOF
+
+sudo virsh pool-start default
+sudo virsh pool-autostart default
+```
