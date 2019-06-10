@@ -19,6 +19,8 @@ $ # add to /etc/hosts
 192.168.126.51 prometheus-k8s-openshift-monitoring.apps.test1.tt.testing  
 ```
 
+see: [detailed-requirements](#detailed-requirements)
+
 ## Patchs and build the installer
 
 #### Cleanup last try
