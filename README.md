@@ -175,3 +175,9 @@ Y
 
 Enabel `kvm_intel` or `kvm_amd`:
 Edit `/etc/modprobe.d/kvm.conf` and set `options kvm_intel nested=1`
+
+Check for nested virt:
+```
+dnf group install virtualization
+virt-host-validate
+```
