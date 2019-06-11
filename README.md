@@ -179,5 +179,6 @@ Edit `/etc/modprobe.d/kvm.conf` and set `options kvm_intel nested=1`
 Check for nested virt:
 ```
 dnf group install virtualization
+[ dnf reinstall fuse -y ]
 virt-host-validate
 ```
