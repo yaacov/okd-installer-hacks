@@ -49,7 +49,8 @@ TAGS=libvirt hack/build.sh
 
 ## Run installer.
 ```
-# env TF_VAR_libvirt_master_memory=16384 ./bin/openshift-install create cluster --dir=mycluster --log-level debug
+# export TF_VAR_libvirt_master_memory=16384
+# export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE="quay.io/openshift-release-dev/ocp-release:4.1.1"
 ./bin/openshift-install create cluster --dir=mycluster --log-level debug
 
 	? SSH Public Key /home/yzamir/.ssh/id_rsa.pub
