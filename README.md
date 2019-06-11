@@ -180,5 +180,6 @@ Check for nested virt:
 ```
 dnf group install virtualization
 [ dnf reinstall fuse -y ]
+[ modprobe fuse ]
 virt-host-validate
 ```
