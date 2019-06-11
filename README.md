@@ -165,3 +165,13 @@ echo server=/tt.testing/192.168.126.1 | sudo tee /etc/NetworkManager/dnsmasq.d/o
 sudo systemctl reload NetworkManager
 
 ```
+
+## Nested virtualization
+Check if nested virtualization is supported `kvm_intel` or `kvm_amd`
+```
+cat /sys/module/kvm_intel/parameters/nested
+Y
+```
+
+Enabel `kvm_intel` or `kvm_amd`:
+Edit `/etc/modprobe.d/kvm.conf` and set `options kvm_intel nested=1`
