@@ -126,6 +126,7 @@ cat /etc/NetworkManager/dnsmasq.d/openshift.conf
 server=/tt.testing/192.168.126.1
 address=/.apps.tt.testing/192.168.126.51
 address=/oauth-openshift.apps.test1.tt.testing/192.168.126.51
+address=/console-openshift-console.apps.test1.tt.testing/192.168.126.51
 
 sudo systemctl reload NetworkManager
 
