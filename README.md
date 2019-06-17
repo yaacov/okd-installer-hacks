@@ -70,7 +70,7 @@ oc get svc -A
 
 #### special user kubeadmin and password written in file
 ```
-oc login -u kubeadmin -p $(cat mycluster/auth/kubeadmin-password) --insecure-skip-tls-verify=true
+oc login https://api.test1.tt.testing:6443 -u kubeadmin -p $(cat mycluster/auth/kubeadmin-password)
 ```
 
 ## Browse
