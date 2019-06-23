@@ -35,7 +35,7 @@ TAGS=libvirt hack/build.sh
 
 ## Run installer.
 ```
-# export TF_VAR_libvirt_master_memory=16384
+# export TF_VAR_libvirt_master_memory=16384 [32768 ... ]
 # export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE="quay.io/openshift-release-dev/ocp-release:4.2"
 ./bin/openshift-install create cluster --dir=mycluster --log-level debug
 
