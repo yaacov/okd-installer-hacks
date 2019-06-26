@@ -114,6 +114,21 @@ sudo systemctl reload NetworkManager
 
 ```
 
+# /etc/hosts
+
+```
+cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+192.168.126.11 api.test1.tt.testing
+192.168.126.51 console-openshift-console.apps.test1.tt.testing
+192.168.126.51 alertmanager-main-openshift-monitoring.apps.test1.tt.testing
+192.168.126.51 grafana-openshift-monitoring.apps.test1.tt.testing
+192.168.126.51 prometheus-k8s-openshift-monitoring.apps.test1.tt.testing
+192.168.126.51 oauth-openshift.apps.test1.tt.testing
+```
+
 ## Nested virtualization
 Check if nested virtualization is supported `kvm_intel` or `kvm_amd`
 ```
