@@ -25,10 +25,10 @@ https://github.com/cynepco3hahue/installer-in-container/blob/master/images/insta
 
 #### Apply patch and compile
 ```
-[git reset --hard origin/release-4.2]
-
-curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/patch/master.patch | git apply -
-
+[ git reset --hard origin/release-4.2 ]
+[ curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/patch/master.patch | git apply - ]
+```
+```
 TAGS=libvirt hack/build.sh
 ```
 -------------------------------------------
