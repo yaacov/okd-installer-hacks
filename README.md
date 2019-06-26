@@ -106,19 +106,6 @@ sudo firewall-cmd --zone=dmz --add-service=libvirt --permanent
 sudo firewall-cmd --zone=dmz --change-interface=tt0  --permanent
 sudo firewall-cmd --zone=dmz --change-interface=virbr0  --permanent
 
-virsh --connect qemu:///system pool-list
-sudo virsh pool-define /dev/stdin <<EOF
-<pool type='dir'>
-  <name>default</name>
-  <target>
-    <path>/var/lib/libvirt/images</path>
-  </target>
-</pool>
-EOF
-
-sudo virsh pool-start default
-sudo virsh pool-autostart default
-
 # Edit /etc/NetworkManager/conf.d/openshift.conf
 echo -e "[main]\ndns=dnsmasq" | sudo tee /etc/NetworkManager/conf.d/openshift.conf
 
