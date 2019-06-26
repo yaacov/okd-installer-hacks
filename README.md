@@ -100,6 +100,7 @@ sudo vim /etc/sysconfig/libvirtd
 # virsh --connect qemu:///system net-dumpxml default
 sudo iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
    
+[ sudo firewall-cmd --get-default-zone ]
 sudo firewall-cmd --add-rich-rule "rule service name="libvirt" reject" --permanent
 sudo firewall-cmd --zone=dmz --add-service=libvirt --permanent
 sudo firewall-cmd --zone=dmz --change-interface=tt0  --permanent
