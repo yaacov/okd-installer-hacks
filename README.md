@@ -62,10 +62,6 @@ TAGS=libvirt hack/build.sh
 #### Set kubeconfig
 ```
 cp mycluster/auth/kubeconfig ~/.kube/config
-
-oc get pod -A
-oc get nodes -A -o wide
-oc get svc -A
 ```
 
 #### special user kubeadmin and password written in file
