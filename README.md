@@ -75,7 +75,9 @@ https://console-openshift-console.apps.test1.tt.testing
 ## Install kubevirt
 ```
 export RELEASE=v0.18.0
-kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt.yaml
+
+oc adm policy add-scc-to-user privileged -n kubevirt -z kubevirt-operator
+ 
 kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-operator.yaml
 kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-cr.yaml
 
