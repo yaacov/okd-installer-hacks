@@ -111,9 +111,9 @@ sudo iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509
    
 [ sudo firewall-cmd --get-default-zone ]
 sudo firewall-cmd --add-rich-rule "rule service name="libvirt" reject" --permanent
-sudo firewall-cmd --zone=dmz --add-service=libvirt --permanent
-sudo firewall-cmd --zone=dmz --change-interface=tt0  --permanent
-sudo firewall-cmd --zone=dmz --change-interface=virbr0  --permanent
+sudo firewall-cmd --zone=<the default zone> --add-service=libvirt --permanent
+sudo firewall-cmd --zone=<the default zone> --change-interface=tt0  --permanent
+sudo firewall-cmd --zone=<the default zone> --change-interface=virbr0  --permanent
 
 # Edit /etc/NetworkManager/conf.d/openshift.conf
 echo -e "[main]\ndns=dnsmasq" | sudo tee /etc/NetworkManager/conf.d/openshift.conf
