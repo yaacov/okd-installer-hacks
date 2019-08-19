@@ -7,12 +7,6 @@ see: [detailed-requirements](#detailed-requirements)
 
 ## Patchs and build the installer
 
-#### Cleanup last try
-```
-rm -rf mycluster/
-./scripts/maintenance/virsh-cleanup.sh
-```
-
 #### Refs:
 
 https://github.com/openshift/installer
@@ -20,6 +14,12 @@ https://github.com/openshift/installer
 https://github.com/openshift/installer/blob/master/docs/dev/libvirt/README.md
 
 https://github.com/cynepco3hahue/installer-in-container
+
+#### Cleanup last try
+```
+rm -rf mycluster/
+./scripts/maintenance/virsh-cleanup.sh
+```
 
 #### Apply patch and compile
 ```
