@@ -13,15 +13,13 @@ rm -rf mycluster/
 ./scripts/maintenance/virsh-cleanup.sh
 ```
 
-#### Get a patch
+#### Refs:
 
-https://github.com/yaacov/okd-installer-hacks/blob/master/patch/master.patch
+https://github.com/openshift/installer
 
-Ref:
+https://github.com/openshift/installer/blob/master/docs/dev/libvirt/README.md
 
-https://github.com/cynepco3hahue/installer-in-container/blob/master/images/installer
-
-https://github.com/cynepco3hahue/installer-in-container/blob/master/images/installer/hacks/v0.14.0
+https://github.com/cynepco3hahue/installer-in-container
 
 #### Apply patch and compile
 ```
@@ -59,6 +57,11 @@ TAGS=libvirt hack/build.sh
 	You can get this secret from https://cloud.openshift.com/clusters/install#pull-secret
 ```
 
+While running, check the new network defined by the installer and update the working-<uid> network:
+```
+virsh net-update --config --live working-rkx9k add dns-host '<host ip="192.168.126.51"><hostname>oauth-openshift.apps.working.oc4</hostname></host>'
+```
+
 #### Set kubeconfig
 ```
 cp mycluster/auth/kubeconfig ~/.kube/config
@@ -93,7 +96,15 @@ sudo dnf install libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm
 sudo systemctl enable --now libvirtd
 
 sudo vim /etc/libvirt/libvirtd.conf
+# Enable:
+# listen_tls = 0
+# listen_tcp = 1
+# auth_tcp="none"
+# tcp_port="16509"
+
 sudo vim /etc/sysconfig/libvirtd
+# Enable:
+# LIBVIRTD_ARGS="--listen"
 
 # virsh --connect qemu:///system net-dumpxml default
 sudo iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
