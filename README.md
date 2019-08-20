@@ -5,7 +5,7 @@ hacks to install okd using installer
 
 see: [detailed-requirements](#detailed-requirements)
 
-## Patchs and build the installer
+## Build the installer
 
 #### Refs:
 
@@ -25,11 +25,11 @@ rm -rf mycluster/
 mkdir -p /root/go/src/github.com/openshift/ && cd $_
 git clone https://github.com/openshift/installer.git && cd installer
 ```
-#### Apply patch and compile
+#### Compile
 ```
 [ git reset --hard origin/release-4.2 ]
 ```
-# To enable libvirt based install
+##### To enable libvirt based install use the `TAGS` env var
 ```
 TAGS=libvirt hack/build.sh
 ```
@@ -64,6 +64,8 @@ TAGS=libvirt hack/build.sh
 ```
 
 While running, check the new network defined by the installer and update the working-<uid> network:
+	
+( In this example we patch the `test1-4crq4` network, replace with the network created by the installer )
 ```
 virsh net-update --config --live test1-4crq4 add dns-host '<host ip="192.168.126.51"><hostname>oauth-openshift.apps.test1.tt.testing</hostname></host>'
 ```
