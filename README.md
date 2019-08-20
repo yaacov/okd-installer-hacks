@@ -67,8 +67,6 @@ TAGS=libvirt hack/build.sh
 ```
 
 While running, check the new network defined by the installer and update the working-<uid> network:
-	
-( In this example we patch the `test1-4crq4` network, replace with the network created by the installer )
 ```
 virsh net-update --config --live test1-<NETWORK UID> add dns-host '<host ip="192.168.126.51"><hostname>oauth-openshift.apps.test1.tt.testing</hostname></host>'
 ```
