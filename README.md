@@ -20,12 +20,16 @@ https://github.com/cynepco3hahue/installer-in-container
 rm -rf mycluster/
 ./scripts/maintenance/virsh-cleanup.sh
 ```
-
+#### git clone openshift installer
+```
+mkdir -p /root/go/src/github.com/openshift/ && cd $_
+git clone https://github.com/openshift/installer.git && cd installer
+```
 #### Apply patch and compile
 ```
 [ git reset --hard origin/release-4.2 ]
-[ curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/patch/master.patch | git apply - ]
 ```
+# To enable libvirt based install
 ```
 TAGS=libvirt hack/build.sh
 ```
@@ -33,8 +37,10 @@ TAGS=libvirt hack/build.sh
 
 ## Run installer.
 ```
+# The following 2 lines should only be used if you want to override default values, otherwise skip.
 # export TF_VAR_libvirt_master_memory=16384 [32768 ... ]
 # export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE="quay.io/openshift-release-dev/ocp-release:4.2"
+
 ./bin/openshift-install create cluster --dir=mycluster --log-level debug
 
 	? SSH Public Key /home/yzamir/.ssh/id_rsa.pub
@@ -59,7 +65,7 @@ TAGS=libvirt hack/build.sh
 
 While running, check the new network defined by the installer and update the working-<uid> network:
 ```
-virsh net-update --config --live working-rkx9k add dns-host '<host ip="192.168.126.51"><hostname>oauth-openshift.apps.working.oc4</hostname></host>'
+virsh net-update --config --live test1-4crq4 add dns-host '<host ip="192.168.126.51"><hostname>oauth-openshift.apps.test1.tt.testing</hostname></host>'
 ```
 
 #### Set kubeconfig
@@ -87,48 +93,55 @@ kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEAS
 ```
 
 ## Detailed requirements
-```
-dnf install golang-bin gcc-c++ libvirt-devel
-go get -u github.com/golang/dep/cmd/dep
 
-# ls -l /dev/kvm 
-sudo dnf install libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm
+### Verify that you have both private and publicy keys under ~/.ssh/ , otherwise generate via
+```
+ssh-keygen
+```
+### Install needed packages
+```
+dnf install golang-bin gcc-c++ libvirt-devel libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm git vim origin-clients
+go get -u github.com/golang/dep/cmd/dep
+```
+### Check and setup virtualization 
+#### Check nested virtualization
+```
+ls -l /dev/kvm
+```
+#### Libvirt configuration
+```
 sudo systemctl enable --now libvirtd
 
-sudo vim /etc/libvirt/libvirtd.conf
-# Enable:
-# listen_tls = 0
-# listen_tcp = 1
-# auth_tcp="none"
-# tcp_port="16509"
+echo listen_tls = 0 >> /etc/libvirt/libvirtd.conf
+echo listen_tcp = 1 >> /etc/libvirt/libvirtd.conf
+echo auth_tcp="none" >> /etc/libvirt/libvirtd.conf
+echo tcp_port="16509" >> /etc/libvirt/libvirtd.conf
 
-sudo vim /etc/sysconfig/libvirtd
-# Enable:
-# LIBVIRTD_ARGS="--listen"
-
-# virsh --connect qemu:///system net-dumpxml default
-sudo iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
-   
-[ sudo firewall-cmd --get-default-zone ]
-sudo firewall-cmd --add-rich-rule "rule service name="libvirt" reject" --permanent
-sudo firewall-cmd --zone=<the default zone> --add-service=libvirt --permanent
-sudo firewall-cmd --zone=<the default zone> --change-interface=tt0  --permanent
-sudo firewall-cmd --zone=<the default zone> --change-interface=virbr0  --permanent
-
-# Edit /etc/NetworkManager/conf.d/openshift.conf
-echo -e "[main]\ndns=dnsmasq" | sudo tee /etc/NetworkManager/conf.d/openshift.conf
-
-# Edit /etc/NetworkManager/dnsmasq.d/openshift.conf 
-cat /etc/NetworkManager/dnsmasq.d/openshift.conf 
-server=/tt.testing/192.168.126.1
-address=/.apps.test1.tt.testing/192.168.126.51
-
-sudo systemctl reload NetworkManager
-
+echo LIBVIRTD_ARGS="--listen" >> /etc/sysconfig/libvirtd
 ```
 
-# /etc/hosts
+### Configure iptables and firewall
+```
+virsh --connect qemu:///system net-dumpxml default
+sudo iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
+   
+DEFAULT_ZONE=$(sudo firewall-cmd --get-default-zone)
+sudo firewall-cmd --add-rich-rule "rule service name="libvirt" reject" --permanent
+sudo firewall-cmd --zone=$DEFAULT_ZONE --add-service=libvirt --permanent
+sudo firewall-cmd --zone=$DEFAULT_ZONE --change-interface=tt0  --permanent
+sudo firewall-cmd --zone=$DEFAULT_ZONE --change-interface=virbr0  --permanent
+```
 
+### Edit /etc/NetworkManager/conf.d/openshift.conf
+`echo -e "[main]\ndns=dnsmasq" | sudo tee /etc/NetworkManager/conf.d/openshift.conf`
+
+### Edit /etc/NetworkManager/dnsmasq.d/openshift.conf 
+```
+echo -e "server=/tt.testing/192.168.126.1\naddress=/.apps.test1.tt.testing/192.168.126.51" | sudo tee /etc/NetworkManager/dnsmasq.d/openshift.conf
+sudo systemctl reload NetworkManager
+```
+
+### Edit /etc/hosts
 ```
 cat /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
