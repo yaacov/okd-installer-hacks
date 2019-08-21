@@ -5,7 +5,7 @@ hacks to install okd using installer
 
 see: [detailed-requirements](#detailed-requirements)
 
-## Patchs and build the installer
+## Build the installer
 
 #### Refs:
 
@@ -25,11 +25,14 @@ rm -rf mycluster/
 mkdir -p /root/go/src/github.com/openshift/ && cd $_
 git clone https://github.com/openshift/installer.git && cd installer
 ```
-#### Apply patch and compile
+Use master branch, or reset to a different branch.
 ```
 [ git reset --hard origin/release-4.2 ]
 ```
-# To enable libvirt based install
+
+#### Compile
+
+To enable libvirt based install use the `TAGS` env var
 ```
 TAGS=libvirt hack/build.sh
 ```
