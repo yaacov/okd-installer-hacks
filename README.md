@@ -65,12 +65,14 @@ TAGS=libvirt hack/build.sh
 
 While running, check the new network defined by the installer and update the working-<uid> network:
 ```
-virsh net-update --config --live test1-4crq4 add dns-host '<host ip="192.168.126.51"><hostname>oauth-openshift.apps.test1.tt.testing</hostname></host>'
+NET_NAME=$(virsh net-list --name | grep test1)
+virsh net-update --config --live $NET_NAME add dns-host '<host ip="192.168.126.51"><hostname>oauth-openshift.apps.test1.tt.testing</hostname></host>'
 ```
 
 #### Set kubeconfig
 ```
-cp mycluster/auth/kubeconfig ~/.kube/config
+mkdir -p ~/.kube
+cp ~/go/src/github.com/openshift/installer/mycluster/auth/kubeconfig ~/.kube/configconfig
 ```
 
 #### special user kubeadmin and password written in file
@@ -119,16 +121,15 @@ echo tcp_port=\"16509\" >> /etc/libvirt/libvirtd.conf
 
 echo LIBVIRTD_ARGS="--listen" >> /etc/sysconfig/libvirtd
 ```
-
-### Configure iptables and firewall
-```
-virsh --connect qemu:///system net-dumpxml default
-sudo iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
-```
 #### Enable firewalld
 ```
 systemctl enable firewalld
 systemctl start firewalld
+```
+### Configure iptables and firewall
+```
+virsh --connect qemu:///system net-dumpxml default
+sudo iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
 ```
 # Configure firewalld
 ```
