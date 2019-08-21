@@ -117,8 +117,8 @@ sudo systemctl enable --now libvirtd
 
 echo listen_tls = 0 >> /etc/libvirt/libvirtd.conf
 echo listen_tcp = 1 >> /etc/libvirt/libvirtd.conf
-echo auth_tcp="none" >> /etc/libvirt/libvirtd.conf
-echo tcp_port="16509" >> /etc/libvirt/libvirtd.conf
+echo auth_tcp=\"none\" >> /etc/libvirt/libvirtd.conf
+echo tcp_port=\"16509\" >> /etc/libvirt/libvirtd.conf
 
 echo LIBVIRTD_ARGS="--listen" >> /etc/sysconfig/libvirtd
 ```
@@ -127,7 +127,14 @@ echo LIBVIRTD_ARGS="--listen" >> /etc/sysconfig/libvirtd
 ```
 virsh --connect qemu:///system net-dumpxml default
 sudo iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
-   
+```
+#### Enable firewalld
+```
+systemctl enable firewalld
+systemctl start firewalld
+```
+# Configure firewalld
+```
 DEFAULT_ZONE=$(sudo firewall-cmd --get-default-zone)
 sudo firewall-cmd --add-rich-rule "rule service name="libvirt" reject" --permanent
 sudo firewall-cmd --zone=$DEFAULT_ZONE --add-service=libvirt --permanent
