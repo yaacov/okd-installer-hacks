@@ -183,3 +183,9 @@ dnf group install virtualization
 [ modprobe fuse ]
 virt-host-validate
 ```
+If needed, edit the file /etc/default/grub and add intel_iommu=on to the existing GRUB_CMDLINE_LINUX line. and run grub2-mkconfig:
+```
+vim /etc/default/grub
+# add intel_iommu=on to the existing GRUB_CMDLINE_LINUX line
+grub2-mkconfig -o /boot/grub2/grub.cfg
+```
