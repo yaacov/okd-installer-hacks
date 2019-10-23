@@ -12,7 +12,8 @@ Let haproxy connect to any port:
 sudo setsebool -P haproxy_connect_any=1
 ```
 
-Edit `haproxy.cfg`
+Edit `/etc/haproxy/haproxy.cfg`
+( [example](/haproxy/haproxy.cfg) )
 
 Start haproxy
 ```
