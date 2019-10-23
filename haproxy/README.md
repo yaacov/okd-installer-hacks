@@ -21,8 +21,9 @@ sudo systemctl enable --now haproxy.service
 
 Open ports on server
 ```
-firewall-cmd --zone=public --add-port=443/tcp --permanent
-firewall-cmd --zone=public --add-port=6443/tcp --permanent
-firewall-cmd --zone=public --add-port=80/tcp --permanent
+DEFAULT_ZONE=$(sudo firewall-cmd --get-default-zone)
+firewall-cmd --zone=$DEFAULT_ZONE --add-port=443/tcp --permanent
+firewall-cmd --zone=$DEFAULT_ZONE --add-port=6443/tcp --permanent
+firewall-cmd --zone=$DEFAULT_ZONE --add-port=80/tcp --permanent
 firewall-cmd --reload
 ```
