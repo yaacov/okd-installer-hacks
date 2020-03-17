@@ -1,0 +1,9 @@
+[Unit]
+Description=Description of the systemd service
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/local/bin/startup.sh
+
+[Install]
+WantedBy=default.target
