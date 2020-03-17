@@ -186,6 +186,6 @@ virt-host-validate
 If needed, edit the file /etc/default/grub and add intel_iommu=on to the existing GRUB_CMDLINE_LINUX line. and run grub2-mkconfig:
 ```
 vim /etc/default/grub
-# add intel_iommu=on to the existing GRUB_CMDLINE_LINUX line
+# Add intel_iommu=on systemd.unified_cgroup_hierarchy=0 to GRUB_CMDLINE_LINUX
 grub2-mkconfig -o /boot/grub2/grub.cfg
 ```
