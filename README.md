@@ -128,8 +128,7 @@ echo LIBVIRTD_ARGS="--listen" >> /etc/sysconfig/libvirtd
 ```
 #### Enable firewalld
 ```
-systemctl enable firewalld
-systemctl start firewalld
+systemctl enable --now firewalld
 ```
 ### Configure iptables and firewall
 ```
