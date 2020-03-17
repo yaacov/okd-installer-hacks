@@ -109,10 +109,7 @@ dnf install golang-bin gcc-c++ libvirt-devel libvirt libvirt-devel libvirt-daemo
 go get -u github.com/golang/dep/cmd/dep
 ```
 ### Check and setup virtualization 
-#### Check nested virtualization
-```
-ls -l /dev/kvm
-```
+
 #### Libvirt configuration
 ```
 sudo systemctl enable --now libvirtd
