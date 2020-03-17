@@ -6,6 +6,15 @@ systemctl enable --now startup.service
 ```
 
 ```
+systemctl start libvirtd-tcp.socket 
+  147  systemctl status libvirtd-tcp.socket 
+  148  systemctl start libvirtd
+  149  systemctl status libvirtd
+  150  systemctl status libvirtd-tcp.socket 
+  151  virsh -c qemu+tcp://192.168.122.1/system version
+```
+
+```
     2  df -h
     4  lvresize --resizefs -l +100%FREE /dev/mapper/fedora_dell--r730--00300-root
     
