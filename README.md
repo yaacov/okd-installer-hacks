@@ -177,8 +177,10 @@ Edit `/etc/modprobe.d/kvm.conf` and set `options kvm_intel nested=1`
 Check for nested virt:
 ```
 dnf group install virtualization
-[ dnf reinstall fuse -y ]
-[ modprobe fuse ]
+dnf reinstall fuse -y
+echo "fuse" >> /etc/modules-load.d/modules.conf
+modprobe fuse
+
 virt-host-validate
 ```
 If needed, edit the file /etc/default/grub and add intel_iommu=on to the existing GRUB_CMDLINE_LINUX line. and run grub2-mkconfig:
