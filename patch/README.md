@@ -11,6 +11,8 @@ systemctl status libvirtd-tcp.socket
   306  virsh -c qemu+tcp://192.168.122.1/system version
   307  virt-host-validate
   308  iptables -L | grep dpt:16509
+  
+  xfs_info / | grep ftype # ftype shoud be =1
 ```
 
 ```
