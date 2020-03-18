@@ -36,6 +36,9 @@ systemctl start libvirtd-tcp.socket
    14  dnf update -y
    15  dnf install golang-bin gcc-c++ libvirt-devel libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm git vim origin-clients
    
+   # for dev scripts
+   sudo dnf groupinstall "Development Tools"
+   
    16  ssh-keygen
    17  cat .ssh/id_rsa
    
