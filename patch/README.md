@@ -6,6 +6,14 @@ systemctl enable --now startup.service
 ```
 
 ```
+systemctl status libvirtd-tcp.socket 
+  305  systemctl status libvirtd
+  306  virsh -c qemu+tcp://192.168.122.1/system version
+  307  virt-host-validate
+  308  iptables -L | grep dpt:16509
+```
+
+```
 systemctl start libvirtd-tcp.socket 
   147  systemctl status libvirtd-tcp.socket 
   148  systemctl start libvirtd
