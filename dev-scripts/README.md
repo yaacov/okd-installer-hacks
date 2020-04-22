@@ -91,11 +91,11 @@ make clean
 ``` bash
 
 # Create disks
-qemu-img create -f qcow2 worker_1.qcow2 250G
-qemu-img create -f qcow2 worker_2.qcow2 250G
-qemu-img create -f qcow2 worker_3.qcow2 250G
-qemu-img create -f qcow2 worker_4.qcow2 250G
-qemu-img create -f qcow2 worker_5.qcow2 250G
+qemu-img create -f qcow2 worker_1.qcow2 400G
+qemu-img create -f qcow2 worker_2.qcow2 400G
+qemu-img create -f qcow2 worker_3.qcow2 400G
+qemu-img create -f qcow2 worker_4.qcow2 400G
+qemu-img create -f qcow2 worker_5.qcow2 400G
 chmod ugo+rwx worker_*
 mv worker_* /var/lib/libvirt/images/
 
