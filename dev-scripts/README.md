@@ -111,32 +111,3 @@ virsh attach-disk ostest_worker_5 /var/lib/libvirt/images/worker_5.qcow2 vda --p
 ssh core@192.168.111.23 -i ~dev/.ssh/id_rsa
 sudo fdisk -l
 ```
-
-## Install kubevirt
-
-``` bash
-
-# Login
-cat ~dev/dev-scripts/ocp/ostest/auth/kubeadmin-password ; echo
-oc login -u kubeadmin -p xxxx
-
-# Install kubevirt
-export RELEASE=v0.28.0
-
-oc adm policy add-scc-to-user privileged -n kubevirt -z kubevirt-operator
- 
-kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-operator.yaml
-kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-cr.yaml
-
-# Set kubevirt-config feature-gates
-vim config.yaml
-oc create -f config.yaml
-```
-
-oc create -f common.yaml
-oc create -f operator-openshift.yaml
-oc create -f cluster.yaml
-oc create -f pool.yaml
-
-oc create -f toolbox.yam
-oc create -f cephblockpool.yaml
