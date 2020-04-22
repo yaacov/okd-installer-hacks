@@ -3,6 +3,7 @@
 ## References
 
 https://github.com/MoserMichael/metal3-dev-scripts-howto
+
 https://github.com/openshift-metal3/dev-scripts
 
 ## Install and init RHEL 8
