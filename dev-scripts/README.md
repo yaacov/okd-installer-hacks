@@ -86,7 +86,7 @@ sudo rm -rf /opt/dev-scripts /opt/metal3-dev-env logs/*
 make clean
 ```
 
-## Add storage to workers.
+## Add storage to workers
 
 ``` bash
 
