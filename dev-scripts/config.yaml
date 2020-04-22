@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  feature-gates: DataVolumes,SRIOV,LiveMigration,CPUManager,CPUNodeDiscovery,Sidecar
+  migrations: '{"nodeDrainTaintKey" : "node.kubernetes.io/unschedulable"}'
+kind: ConfigMap
+metadata:
+  labels:
+    app: kubevirt-hyperconverged
+  name: kubevirt-config
+  namespace: kubevirt

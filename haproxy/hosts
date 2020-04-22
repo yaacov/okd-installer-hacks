@@ -1,6 +1,0 @@
-10.35.12.12 api.test1.tt.testing
-
-10.35.12.12 console-openshift-console.apps.test1.tt.testing
-10.35.12.12 grafana-openshift-monitoring.apps.test1.tt.testing
-10.35.12.12 prometheus-k8s-openshift-monitoring.apps.test1.tt.testing
-10.35.12.12 oauth-openshift.apps.test1.tt.testing
