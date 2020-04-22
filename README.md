@@ -86,22 +86,6 @@ oc login https://api.test1.tt.testing:6443 -u kubeadmin -p $(cat mycluster/auth/
 ## Browse
 https://console-openshift-console.apps.test1.tt.testing
 
-## Install kubevirt
-
-``` bash
-# Kubevirt
-export RELEASE=v0.18.0
-oc adm policy add-scc-to-user privileged -n kubevirt -z kubevirt-operator
-kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-operator.yaml
-kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-cr.yaml
-
-# CDI
-$ export VERSION=$(curl -s https://github.com/kubevirt/containerized-data-importer/releases/latest | grep -o "v[0-9]\.[0-9]*\.[0-9]*")
-$ kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-operator.yaml
-$ kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-cr.yaml
-
-```
-
 ## Detailed requirements
 
 ### Verify that you have both private and publicy keys under ~/.ssh/ , otherwise generate via
