@@ -10,4 +10,6 @@ oc create -f cluster.yaml
 oc create -f pool.yaml
 oc create -f storageclass.yaml
 
+oc create -f toolbox.yaml
+
 ```
