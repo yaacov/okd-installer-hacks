@@ -97,6 +97,8 @@ qemu-img create -f qcow2 worker_3.qcow2 400G
 qemu-img create -f qcow2 worker_4.qcow2 400G
 qemu-img create -f qcow2 worker_5.qcow2 400G
 chmod ugo+rwx worker_*
+
+# rm /var/lib/libvirt/images/worker_*
 mv worker_* /var/lib/libvirt/images/
 
 # Attach disks
