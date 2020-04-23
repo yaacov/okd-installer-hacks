@@ -10,6 +10,16 @@ oc create -f cluster.yaml
 oc create -f pool.yaml
 oc create -f storageclass.yaml
 
-oc create -f toolbox.yaml
+```
 
+## Debug
+
+``` bash
+oc create -f toolbox.yaml
+```
+
+in the tools pod console:
+
+``` bash
+ceph status
 ```
