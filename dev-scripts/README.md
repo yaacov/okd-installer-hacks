@@ -9,11 +9,11 @@ https://github.com/openshift-metal3/dev-scripts
 ## Install and init RHEL 8
 
 ``` bash
-# Subscribe RHEL.
+# Subscribe RHEL
 subscription-manager register --serverurl subscription.rhsm.stage.redhat.com --username xxxx --password xxxx --auto-attach
 dnf update -y
 
-# Make sure all disk is usable for root fs.
+# Make sure all disk is usable for root fs
 umount /home
 lvremove /dev/mapper/rhel_dell--r640--005-home
 lvextend -l +100%FREE -r /dev/mapper/rhel_dell--r640--005-root
@@ -48,7 +48,7 @@ firewall-cmd --zone=$DEFAULT_ZONE --change-interface=virbr0  --permanent
 
 echo -e "[main]\ndns=dnsmasq" | sudo tee /etc/NetworkManager/conf.d/openshift.conf
 
-# Reboot and check virtualization.
+# Reboot and check virtualization
 reboot
 
 virt-host-validate
@@ -69,11 +69,11 @@ git config --global user.name xxxx
 git clone https://github.com/openshift-metal3/dev-scripts.git
 cd dev-scripts
 
-# Edit cluster.
+# Edit cluster
 cp config_example.sh config_dev.sh
 vim config_dev.sh
 
-# Build.
+# Build
 make
 
 # Check health
@@ -81,7 +81,7 @@ sudo virsh list --all
 oc --kubeconfig ~/dev-scripts/ocp/ostest/auth/kubeconfig get co --all-namespaces
 oc --kubeconfig ~/dev-scripts/ocp/ostest/auth/kubeconfig get pods --all-namespaces
 
-# Cleanup.
+# Cleanup
 sudo rm -rf /opt/dev-scripts /opt/metal3-dev-env logs/*
 make clean
 ```
@@ -108,7 +108,7 @@ virsh attach-disk ostest_worker_3 /var/lib/libvirt/images/worker_3.qcow2 vda --p
 virsh attach-disk ostest_worker_4 /var/lib/libvirt/images/worker_4.qcow2 vda --persistent --live --subdriver qcow2
 virsh attach-disk ostest_worker_5 /var/lib/libvirt/images/worker_5.qcow2 vda --persistent --live --subdriver qcow2
 
-# Check is /dev/vda is available as a worker disk.
+# Check is /dev/vda is available as a worker disk
 ssh core@192.168.111.23 -i ~dev/.ssh/id_rsa
 sudo fdisk -l
 ```
