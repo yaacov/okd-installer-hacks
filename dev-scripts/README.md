@@ -91,6 +91,7 @@ make clean
 ``` bash
 
 # Create disks
+qemu-img create -f qcow2 worker_0.qcow2 400G
 qemu-img create -f qcow2 worker_1.qcow2 400G
 qemu-img create -f qcow2 worker_2.qcow2 400G
 qemu-img create -f qcow2 worker_3.qcow2 400G
