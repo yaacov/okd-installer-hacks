@@ -1,0 +1,8 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: kubevirt-storage-class-defaults
+  namespace: openshift-cnv
+data:
+  accessMode: ReadWriteOnce
+  volumeMode: Filesystem
