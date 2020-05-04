@@ -12,6 +12,12 @@ oc create -f storageclass.yaml
 
 ```
 
+## Adding kubevirt storage class defaults
+
+``` bash
+oc create -f kubevirt-storage-class-defaults.yaml
+```
+
 ## Debug
 
 ``` bash
