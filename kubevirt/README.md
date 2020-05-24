@@ -19,4 +19,18 @@ cd kubevirt-ssp-operator
 export NAMESPACE=kubevirt
 hack/install-operator.sh $NAMESPACE
 
+
+# Common Templates
+sudo dnf install intltool ansible
+
+git clone https://github.com/kubevirt/common-templates
+cd common-templates
+git submodule init
+git submodule update
+
+make -C osinfo-db
+ansible-playbook generate-templates.yaml
+
+oc project openshift
+oc create -f dist/templates
 ```
