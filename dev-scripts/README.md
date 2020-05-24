@@ -82,8 +82,9 @@ oc --kubeconfig ~/dev-scripts/ocp/ostest/auth/kubeconfig get co --all-namespaces
 oc --kubeconfig ~/dev-scripts/ocp/ostest/auth/kubeconfig get pods --all-namespaces
 
 # Cleanup
-sudo rm -rf /opt/dev-scripts /opt/metal3-dev-env logs/*
 make clean
+sudo rm -rf /opt/dev-scripts /opt/metal3-dev-env logs/*
+sudo rm -rf /var/lib/libvirt/images/worker_*
 ```
 
 ## Add storage to workers
@@ -91,12 +92,12 @@ make clean
 ``` bash
 
 # Create disks
-qemu-img create -f qcow2 worker_0.qcow2 400G
-qemu-img create -f qcow2 worker_1.qcow2 400G
-qemu-img create -f qcow2 worker_2.qcow2 400G
-qemu-img create -f qcow2 worker_3.qcow2 400G
-qemu-img create -f qcow2 worker_4.qcow2 400G
-qemu-img create -f qcow2 worker_5.qcow2 400G
+qemu-img create -f qcow2 worker_0.qcow2 800G
+qemu-img create -f qcow2 worker_1.qcow2 800G
+qemu-img create -f qcow2 worker_2.qcow2 800G
+qemu-img create -f qcow2 worker_3.qcow2 800G
+qemu-img create -f qcow2 worker_4.qcow2 800G
+qemu-img create -f qcow2 worker_5.qcow2 800G
 chmod ugo+rwx worker_*
 
 # rm /var/lib/libvirt/images/worker_*
