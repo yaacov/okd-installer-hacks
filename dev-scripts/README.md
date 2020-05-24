@@ -48,6 +48,13 @@ firewall-cmd --zone=$DEFAULT_ZONE --change-interface=virbr0  --permanent
 
 echo -e "[main]\ndns=dnsmasq" | sudo tee /etc/NetworkManager/conf.d/openshift.conf
 
+# Virtualization check
+virt-host-validate
+
+vim /etc/default/grub
+# Add intel_iommu=on systemd.unified_cgroup_hierarchy=0 to GRUB_CMDLINE_LINUX
+grub2-mkconfig -o /boot/grub2/grub.cfg
+
 # Reboot and check virtualization
 reboot
 
