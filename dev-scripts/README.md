@@ -124,7 +124,7 @@ ssh core@192.168.111.23 -i ~dev/.ssh/id_rsa
 sudo fdisk -l
 ```
 
-## Taint mater nodes
+## Taint master nodes
 
 ``` bash
 kubectl taint node -l node-role.kubernetes.io/master node-role.kubernetes.io/master=true:NoSchedule
