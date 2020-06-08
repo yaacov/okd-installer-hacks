@@ -26,5 +26,7 @@ DEFAULT_ZONE=$(sudo firewall-cmd --get-default-zone)
 firewall-cmd --zone=$DEFAULT_ZONE --add-port=443/tcp --permanent
 firewall-cmd --zone=$DEFAULT_ZONE --add-port=6443/tcp --permanent
 firewall-cmd --zone=$DEFAULT_ZONE --add-port=80/tcp --permanent
+firewall-cmd --zone=$DEFAULT_ZONE --add-port=9000/tcp --permanent
+
 firewall-cmd --reload
 ```
