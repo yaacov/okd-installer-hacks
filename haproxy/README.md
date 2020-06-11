@@ -31,7 +31,7 @@ firewall-cmd --zone=$DEFAULT_ZONE --add-port=9000/tcp --permanent
 firewall-cmd --reload
 ```
 
-## If apache is taking port 80 (on RHEL from PXE):
+### If apache is taking port 80 (on RHEL from PXE):
 ```
 # find the apache pids
 ps -e | grep httpd
@@ -39,7 +39,7 @@ ps -e | grep httpd
 kill <pid number>
 ```
 
-# dnsmasq on fedora
+### dnsmasq on fedora
 
 ```
 # /etc/NetworkManager/conf.d/00-use-dnsmasq.conf
