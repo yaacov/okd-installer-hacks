@@ -4,7 +4,7 @@ HAProxy exposes openshift running on a libvirt network to the outside world.
 
 Install haproxy:
 ```
-sudo dnf install haproxy
+sudo dnf install haproxy -y
 ```
 
 Let haproxy connect to any port:
