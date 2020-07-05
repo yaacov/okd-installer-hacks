@@ -2,7 +2,7 @@
 
 ``` bash
 # Kubevirt
-export RELEASE=v0.28.0
+export RELEASE=$(curl -s https://github.com/kubevirt/kubevirt/releases/latest | grep -o "v[0-9]\.[0-9]*\.[0-9]*")
 oc adm policy add-scc-to-user privileged -n kubevirt -z kubevirt-operator
 oc apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-operator.yaml
 oc apply -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-cr.yaml
