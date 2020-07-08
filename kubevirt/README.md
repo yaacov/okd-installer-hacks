@@ -34,3 +34,17 @@ ansible-playbook generate-templates.yaml
 oc project openshift
 oc create -f dist/templates
 ```
+
+
+``` bash
+# Kubevirt
+export RELEASE=v0.30.3
+oc adm policy add-scc-to-user privileged -n kubevirt -z kubevirt-operator
+oc delete -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-operator.yaml
+oc delete -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-cr.yaml
+
+# CDI
+export VERSION=v1.18.2
+oc delete -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-operator.yaml
+oc delete -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-cr.yaml
+```
