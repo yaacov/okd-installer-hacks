@@ -32,12 +32,12 @@ oc create -f dist/templates
 
 ``` bash
 # CDI
-export VERSION=v1.18.2
+export VERSION=v1.20.1
 oc delete -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-cr.yaml
 oc delete -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-operator.yaml
 
 # Kubevirt
-export RELEASE=v0.30.3
+export RELEASE=v0.30.5
 oc delete -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-cr.yaml
 oc delete -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/kubevirt-operator.yaml
 
