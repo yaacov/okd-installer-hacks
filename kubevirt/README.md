@@ -43,3 +43,16 @@ oc delete -f https://github.com/kubevirt/kubevirt/releases/download/${RELEASE}/k
 
 
 ```
+
+
+``` bash
+export project=console-devel
+oc new-project $project
+oc create sa $project
+oc create clusterrolebinding $project --clusterrole=cluster-admin --serviceaccount=$project:$project -n ocp-devel-preview
+
+git clone https://github.com/jelkosz/openshift-console-devel-deployer.git
+cd openshift-console-devel-deployer
+oc create -f template/template.yaml 
+
+```
