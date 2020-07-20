@@ -14,16 +14,8 @@ echo $VERSION
 oc create -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-operator.yaml
 oc create -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-cr.yaml
 
-
-# SSD operator
-git clone https://github.com/MarSik/kubevirt-ssp-operator.git
-cd kubevirt-ssp-operator
-export NAMESPACE=kubevirt
-hack/install-operator.sh $NAMESPACE
-
-
 # Common Templates
-sudo dnf install intltool ansible
+dnf install intltool ansible
 
 git clone https://github.com/kubevirt/common-templates
 cd common-templates
