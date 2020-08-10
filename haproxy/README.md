@@ -4,12 +4,12 @@ HAProxy exposes openshift running on a libvirt network to the outside world.
 
 Install haproxy:
 ```
-sudo dnf install haproxy -y
+dnf install haproxy -y
 ```
 
 Let haproxy connect to any port:
 ```
-sudo setsebool -P haproxy_connect_any=1
+setsebool -P haproxy_connect_any=1
 ```
 
 Edit `/etc/haproxy/haproxy.cfg`
@@ -17,7 +17,7 @@ Edit `/etc/haproxy/haproxy.cfg`
 
 Start haproxy
 ```
-sudo systemctl enable --now haproxy.service
+systemctl enable --now haproxy.service
 ```
 
 Open ports on server
@@ -55,7 +55,7 @@ dns=dnsmasq
 address=/.apps.ostest.test.metalkube.org/10.46.26.15
 ```
 ```
-sudo systemctl restart dnsmasq NetworkManager
+systemctl restart dnsmasq NetworkManager
 ```
 ```
 # check nameserver is set to 127.0.0.1
