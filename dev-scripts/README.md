@@ -19,18 +19,21 @@ lvremove /dev/mapper/rhel_dell--r640--005-home
 lvextend -l +100%FREE -r /dev/mapper/rhel_dell--r640--005-root
 vim /etc/fstab # remove home
 
+# Setup pass throgh virtualization
+vim /etc/default/grub
+# Add intel_iommu=on systemd.unified_cgroup_hierarchy=0 to GRUB_CMDLINE_LINUX
+grub2-mkconfig -o /boot/grub2/grub.cfg
+
 # Setup dev user
 adduser dev
-passwd dev
 usermod -aG wheel dev
 echo '%wheel ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
 
 # Install virtualization
 dnf install virt-install golang-bin gcc-c++ libvirt-devel libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm git vim -y
-dnf groupinstall "Development Tools" -y
-go get -u github.com/golang/dep/cmd/dep
 
 systemctl enable --now libvirtd
+systemctl enable --now firewalld
 
 echo listen_tls = 0 >> /etc/libvirt/libvirtd.conf
 echo listen_tcp = 1 >> /etc/libvirt/libvirtd.conf
@@ -39,7 +42,6 @@ echo tcp_port=\"16509\" >> /etc/libvirt/libvirtd.conf
 echo "dns-forward-max=1500" > /etc/dnsmasq.d/increase-forward-max
 echo LIBVIRTD_ARGS="--listen" >> /etc/sysconfig/libvirtd
 
-systemctl enable --now firewalld
 DEFAULT_ZONE=$(sudo firewall-cmd --get-default-zone)
 firewall-cmd --add-rich-rule "rule service name="libvirt" reject" --permanent
 firewall-cmd --zone=$DEFAULT_ZONE --add-service=libvirt --permanent
@@ -47,13 +49,6 @@ firewall-cmd --zone=$DEFAULT_ZONE --change-interface=tt0  --permanent
 firewall-cmd --zone=$DEFAULT_ZONE --change-interface=virbr0  --permanent
 
 echo -e "[main]\ndns=dnsmasq" | sudo tee /etc/NetworkManager/conf.d/openshift.conf
-
-# Virtualization check
-virt-host-validate
-
-vim /etc/default/grub
-# Add intel_iommu=on systemd.unified_cgroup_hierarchy=0 to GRUB_CMDLINE_LINUX
-grub2-mkconfig -o /boot/grub2/grub.cfg
 
 # Reboot and check virtualization
 reboot
