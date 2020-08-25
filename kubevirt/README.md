@@ -27,6 +27,9 @@ ansible-playbook generate-templates.yaml
 
 oc project openshift
 oc create -f dist/templates
+
+# cleanup
+for a in $( oc get template -o name | grep <some regexp here> ); do oc delete $a; done;
 ```
 
 
