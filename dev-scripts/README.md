@@ -50,6 +50,9 @@ firewall-cmd --zone=$DEFAULT_ZONE --change-interface=virbr0  --permanent
 
 echo -e "[main]\ndns=dnsmasq" | sudo tee /etc/NetworkManager/conf.d/openshift.conf
 
+# Remove beaker temp repo
+rm -rf /etc/yum.repos.d/beaker-tasks.repo
+
 # Reboot and check virtualization
 reboot
 
