@@ -1,7 +1,7 @@
 # Install ceph
 
 ``` bash
-git clone --single-branch --branch {{ branchName }} https://github.com/rook/rook.git
+git clone https://github.com/rook/rook.git
 cd rook/cluster/examples/kubernetes/ceph
 
 curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/ceph/kubevirt-storage-class-defaults.yaml > kubevirt-storage-class-defaults.yaml
