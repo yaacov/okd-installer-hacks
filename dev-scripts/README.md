@@ -55,11 +55,12 @@ rm -rf /etc/yum.repos.d/beaker-tasks.repo
 
 # Reboot and check virtualization
 reboot
+# Set iptables after reboot
+iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
 
 virt-host-validate
 systemctl status libvirtd
 virsh -c qemu+tcp://192.168.122.1/system version
-iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
 ```
 
 ## Dev scripts
