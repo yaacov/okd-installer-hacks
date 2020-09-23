@@ -15,7 +15,7 @@ oc create -f storageclass.yaml
 
 ```
 
-## Make 
+## Make rook-ceph default SC
 ``` bash
 oc patch storageclass rook-ceph -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
