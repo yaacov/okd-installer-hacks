@@ -79,6 +79,9 @@ cd dev-scripts
 cp config_example.sh config_dev.sh
 vim config_dev.sh
 
+# Add the pull secret json
+vim pull_secret.json
+
 # Build
 make
 
