@@ -15,6 +15,11 @@ oc create -f storageclass.yaml
 
 ```
 
+## Make 
+``` bash
+oc patch storageclass rook-ceph -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
 ## Adding kubevirt storage class defaults
 
 ``` bash
