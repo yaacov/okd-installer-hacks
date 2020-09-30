@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: console-devel-deployer
+  annotations:
+    description: "Console Devel Deployer"
+    iconClass: "icon-openshift"
+    tags: "development"
+objects:
+
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    name: patch${PATCH}
+    namespace: ${NAMESPACE}
+    labels:
+      app: patch${PATCH}
+  spec:
+    serviceAccountName: ${NAMESPACE}
+    containers:
+    - name: okd-devel-prev
+      image: jelkosz/okd-devel-prev:v1 
+      command: ["/bin/sh","-c"]
+      args: ["cd console && git fetch origin && git reset --hard origin/master && git fetch origin pull/${PATCH}/head:B && git checkout B && ./build.sh && source ./contrib/oc-environment.sh && ./bin/bridge"]
+      ports:
+      - containerPort: 9000
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: patch${PATCH}
+    namespace: ${NAMESPACE}
+  spec:
+    ports:
+      - protocol: TCP
+        port: 9000
+        targetPort: 9000
+    selector:
+      app: patch${PATCH}
+    type: ClusterIP
+    sessionAffinity: None
+
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    name: patch${PATCH}
+    namespace: ${NAMESPACE}
+  spec:
+    host: ${NAMESPACE}-patch${PATCH}.apps.ostest.test.metalkube.org
+    to:
+      kind: Service
+      name: patch${PATCH}
+      weight: 100
+    port:
+      targetPort: 9000
+    wildcardPolicy: None
+
+parameters:
+- name: NAMESPACE
+  description: "The namespace"
+  value: console-devel
+- name: PATCH
+  description: "The patch number"
+
