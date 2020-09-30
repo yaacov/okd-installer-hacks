@@ -6,6 +6,10 @@ https://github.com/MoserMichael/metal3-dev-scripts-howto
 
 https://github.com/openshift-metal3/dev-scripts
 
+https://openshift-release.apps.ci.l2s4.p1.openshiftapps.com/
+
+https://cloud.redhat.com/openshift/install/rhv/installer-provisioned
+
 ## Install and init RHEL 8
 
 ``` bash
