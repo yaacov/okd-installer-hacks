@@ -79,7 +79,7 @@ git config --global user.name xxxx
 git clone https://github.com/openshift-metal3/dev-scripts.git
 cd dev-scripts
 
-# Edit cluster
+# Edit cluster (dont forget to set CI TOKEN at the top fo the file)
 cp config_example.sh config_dev.sh
 vim config_dev.sh
 
