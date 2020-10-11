@@ -4,7 +4,7 @@
 export RELEASE=$(curl -s https://github.com/rook/rook/releases/latest  | grep -o "v[0-9]\.[0-9]*\.[0-9]*")
 echo $RELEASE
 
-git clone https://github.com/rook/rook.git
+git clone --single-branch --branch $RELEASE https://github.com/rook/rook.git
 cd rook/cluster/examples/kubernetes/ceph
 
 curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/ceph/kubevirt-storage-class-defaults.yaml > kubevirt-storage-class-defaults.yaml
