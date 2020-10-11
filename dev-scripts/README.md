@@ -130,6 +130,16 @@ ssh core@192.168.111.23 -i ~dev/.ssh/id_rsa
 sudo fdisk -l
 ```
 
+## Set bridge on workers
+```
+ssh core@192.168.111.23-28 -i ~dev/.ssh/id_rsa
+cd /var/lib/cni/bin
+sudo rm cnv-bridge
+sudo rm cnv-tuning
+sudo ln -s bridge cnv-bridge
+sudo ln -s tuning cnv-tuning
+```
+
 ## Taint master nodes
 
 ``` bash
