@@ -178,3 +178,20 @@ vim /etc/default/grub
 # Add intel_iommu=on systemd.unified_cgroup_hierarchy=0 to GRUB_CMDLINE_LINUX
 grub2-mkconfig -o /boot/grub2/grub.cfg
 ```
+
+## Integration Tests configuration
+
+```
+$ oc create namespace openshift-cnv
+
+$ oc create -f - << EOF 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubevirt-storage-class-defaults
+  namespace: openshift-cnv
+data:
+  accessMode: ReadWriteOnce
+  volumeMode: Filesystem
+EOF
+```
