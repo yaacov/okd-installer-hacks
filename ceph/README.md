@@ -7,6 +7,7 @@ cd rook/cluster/examples/kubernetes/ceph
 curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/ceph/kubevirt-storage-class-defaults.yaml > kubevirt-storage-class-defaults.yaml
 curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/ceph/storageclass.yaml > storageclass.yaml
  
+oc create namespace openshift-cnv
 oc create -f common.yaml
 oc create -f operator-openshift.yaml
 oc create -f cluster.yaml
