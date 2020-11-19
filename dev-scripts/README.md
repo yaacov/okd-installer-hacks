@@ -34,25 +34,16 @@ usermod -aG wheel dev
 echo '%wheel ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
 
 # Install virtualization
-dnf install virt-install golang-bin gcc-c++ libvirt-devel libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm git vim -y
+dnf install virt-install golang-bin gcc-c++ libvirt-devel libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm git -y
 
 systemctl enable --now libvirtd
 systemctl enable --now firewalld
-
-echo listen_tls = 0 >> /etc/libvirt/libvirtd.conf
-echo listen_tcp = 1 >> /etc/libvirt/libvirtd.conf
-echo auth_tcp=\"none\" >> /etc/libvirt/libvirtd.conf
-echo tcp_port=\"16509\" >> /etc/libvirt/libvirtd.conf
-echo "dns-forward-max=1500" > /etc/dnsmasq.d/increase-forward-max
-# !! echo LIBVIRTD_ARGS="--listen" >> /etc/sysconfig/libvirtd
 
 DEFAULT_ZONE=$(sudo firewall-cmd --get-default-zone)
 firewall-cmd --add-rich-rule "rule service name="libvirt" reject" --permanent
 firewall-cmd --zone=$DEFAULT_ZONE --add-service=libvirt --permanent
 firewall-cmd --zone=$DEFAULT_ZONE --change-interface=tt0  --permanent
 firewall-cmd --zone=$DEFAULT_ZONE --change-interface=virbr0  --permanent
-
-echo -e "[main]\ndns=dnsmasq" | sudo tee /etc/NetworkManager/conf.d/openshift.conf
 
 # Remove beaker temp repo
 rm -rf /etc/yum.repos.d/beaker-tasks.repo
@@ -64,7 +55,6 @@ iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j A
 
 virt-host-validate
 systemctl status libvirtd
-virsh -c qemu+tcp://192.168.122.1/system version
 ```
 
 ## Dev scripts
