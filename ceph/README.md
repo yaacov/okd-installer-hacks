@@ -15,7 +15,6 @@ oc create -f operator-openshift.yaml
 oc create -f cluster.yaml
 oc create -f pool.yaml
 oc create -f storageclass.yaml
-oc patch storageclass rook-ceph -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
 ## Adding kubevirt storage class defaults
