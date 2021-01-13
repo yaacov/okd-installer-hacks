@@ -15,7 +15,7 @@ https://cloud.redhat.com/openshift/install/rhv/installer-provisioned
 ``` bash
 # Subscribe RHEL
 subscription-manager register --serverurl subscription.rhsm.stage.redhat.com --username xxxx --password xxxx --auto-attach
-dnf update -y
+# dnf update -y
 
 # Make sure all disk is usable for root fs
 umount /home
