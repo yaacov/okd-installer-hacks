@@ -28,11 +28,6 @@ vim /etc/default/grub
 # Add intel_iommu=on systemd.unified_cgroup_hierarchy=0 to GRUB_CMDLINE_LINUX
 grub2-mkconfig -o /boot/grub2/grub.cfg
 
-# Setup dev user
-adduser dev
-usermod -aG wheel dev
-echo '%wheel ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
-
 # Install virtualization
 dnf install virt-install golang-bin gcc-c++ libvirt-devel libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm git -y
 
@@ -51,13 +46,20 @@ rm -rf /etc/yum.repos.d/beaker-tasks.repo
 # Reboot and check virtualization
 reboot
 # Set iptables after reboot
-iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
+# iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
 
 virt-host-validate
 systemctl status libvirtd
 ```
 
 ## Dev scripts
+
+``` bash
+# Setup dev user
+adduser dev
+usermod -aG wheel dev
+echo '%wheel ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
+```
 
 ``` bash
 su - dev
