@@ -63,8 +63,8 @@ systemctl status libvirtd
 su - dev
 ssh-keygen
 
-git config --global user.email xxxx
-git config --global user.name xxxx
+# git config --global user.email xxxx
+# git config --global user.name xxxx
 
 git clone https://github.com/openshift-metal3/dev-scripts.git
 cd dev-scripts
