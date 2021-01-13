@@ -2,7 +2,7 @@
 export IP_STACK=v4
 export VIRSH_DEFAULT_CONNECT_URI=qemu:///system
 
-export NUM_WORKERS=6
+export NUM_WORKERS=3
 export WORKER_MEMORY=65536
 export WORKER_DISK=200
 export WORKER_VCPU=4
