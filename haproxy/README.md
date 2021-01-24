@@ -41,26 +41,3 @@ firewall-cmd --zone=$DEFAULT_ZONE --add-port=9000/tcp --permanent
 firewall-cmd --reload
 ```
 
-
-### dnsmasq on fedora
-
-```
-# /etc/NetworkManager/conf.d/00-use-dnsmasq.conf
-#
-# This enabled the dnsmasq plugin.
-[main]
-dns=dnsmasq
-```
-```
-# /etc/NetworkManager/dnsmasq.d/metalkube.conf
-#
-# This enable apps dns whildcard.
-address=/.apps.ostest.test.metalkube.org/10.46.26.15
-```
-```
-systemctl restart dnsmasq NetworkManager
-```
-```
-# check nameserver is set to 127.0.0.1
-cat /etc/resolv.conf
-```
