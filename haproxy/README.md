@@ -2,6 +2,14 @@
 
 HAProxy exposes openshift running on a libvirt network to the outside world.
 
+### If apache is taking port 80 (on RHEL from PXE):
+```
+# find the apache pids
+ps -e | grep httpd
+# kill the first one, e.g.
+kill <pid number>
+```
+
 Install haproxy:
 ```
 dnf install haproxy -y
@@ -17,6 +25,7 @@ Edit `/etc/haproxy/haproxy.cfg`
 
 Start haproxy
 ```
+vim /etc/haproxy/haproxy.cfg
 systemctl enable --now haproxy.service
 ```
 
@@ -31,13 +40,6 @@ firewall-cmd --zone=$DEFAULT_ZONE --add-port=9000/tcp --permanent
 firewall-cmd --reload
 ```
 
-### If apache is taking port 80 (on RHEL from PXE):
-```
-# find the apache pids
-ps -e | grep httpd
-# kill the first one, e.g.
-kill <pid number>
-```
 
 ### dnsmasq on fedora
 
