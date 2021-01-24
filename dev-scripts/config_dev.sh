@@ -14,4 +14,5 @@ export MASTER_VCPU=4
 
 export IP_STACK=v4
 export NUM_WORKERS=3
+export WORKER_MEMORY=65536
 # export OPENSHIFT_RELEASE_IMAGE='quay.io/openshift-release-dev/ocp-release:4.4.0-rc.10-x86_64'
