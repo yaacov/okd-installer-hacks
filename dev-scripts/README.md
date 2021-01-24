@@ -102,12 +102,12 @@ cat ~dev/dev-scripts/ocp/ostest/auth/kubeadmin-password ; echo;
 ``` bash
 
 # Create disks
-qemu-img create -f qcow2 worker_0.qcow2 800G
-qemu-img create -f qcow2 worker_1.qcow2 800G
-#qemu-img create -f qcow2 worker_2.qcow2 800G
-#qemu-img create -f qcow2 worker_3.qcow2 800G
-#qemu-img create -f qcow2 worker_4.qcow2 800G
-#qemu-img create -f qcow2 worker_5.qcow2 800G
+qemu-img create -f qcow2 worker_0.qcow2 500G
+qemu-img create -f qcow2 worker_1.qcow2 500G
+qemu-img create -f qcow2 worker_2.qcow2 500G
+#qemu-img create -f qcow2 worker_3.qcow2 500G
+#qemu-img create -f qcow2 worker_4.qcow2 500G
+#qemu-img create -f qcow2 worker_5.qcow2 500G
 chmod ugo+rwx worker_*
 
 # rm /var/lib/libvirt/images/worker_*
@@ -117,7 +117,7 @@ mv worker_* /var/lib/libvirt/images/
 ls /var/lib/libvirt/images/
 virsh attach-disk ostest_worker_0 /var/lib/libvirt/images/worker_0.qcow2 vda --persistent --live --subdriver qcow2
 virsh attach-disk ostest_worker_1 /var/lib/libvirt/images/worker_1.qcow2 vda --persistent --live --subdriver qcow2
-#virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --persistent --live --subdriver qcow2
+virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --persistent --live --subdriver qcow2
 #virsh attach-disk ostest_worker_3 /var/lib/libvirt/images/worker_3.qcow2 vda --persistent --live --subdriver qcow2
 #virsh attach-disk ostest_worker_4 /var/lib/libvirt/images/worker_4.qcow2 vda --persistent --live --subdriver qcow2
 #virsh attach-disk ostest_worker_5 /var/lib/libvirt/images/worker_5.qcow2 vda --persistent --live --subdriver qcow2
