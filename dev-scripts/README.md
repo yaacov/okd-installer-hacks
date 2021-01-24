@@ -18,13 +18,13 @@ subscription-manager register --serverurl subscription.rhsm.stage.redhat.com --u
 
 # Make sure all disk is usable for root fs
 umount /home
-lvremove /dev/mapper/rhel_dell--r640--005-home
-lvextend -l +100%FREE -r /dev/mapper/rhel_dell--r640--005-root
+lvremove $(ls /dev/mapper/rhel_dell--r640--* -l | grep -- -home | awk '{print $9;}')
+lvextend -l +100%FREE -r $(ls /dev/mapper/rhel_dell--r640--* -l | grep -- -root | awk '{print $9;}')
 vim /etc/fstab # remove home
 
 # Setup pass throgh virtualization
 vim /etc/default/grub
-# Add intel_iommu=on systemd.unified_cgroup_hierarchy=0 to GRUB_CMDLINE_LINUX
+# Add intel_iommu=on to GRUB_CMDLINE_LINUX
 grub2-mkconfig -o /boot/grub2/grub.cfg
 
 # Install virtualization
