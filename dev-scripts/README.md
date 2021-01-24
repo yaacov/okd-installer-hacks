@@ -15,7 +15,6 @@ https://cloud.redhat.com/openshift/install/rhv/installer-provisioned
 ``` bash
 # Subscribe RHEL
 subscription-manager register --serverurl subscription.rhsm.stage.redhat.com --username xxxx --password xxxx --auto-attach
-dnf update -y
 
 # Make sure all disk is usable for root fs
 umount /home
@@ -29,7 +28,9 @@ vim /etc/default/grub
 grub2-mkconfig -o /boot/grub2/grub.cfg
 
 # Install virtualization
-dnf install virt-install golang-bin gcc-c++ libvirt-devel libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm git -y
+dnf update -y
+dnf install -y git make wget jq
+# dnf install virt-install golang-bin gcc-c++ libvirt-devel libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm git -y
 
 systemctl enable --now libvirtd
 systemctl enable --now firewalld
