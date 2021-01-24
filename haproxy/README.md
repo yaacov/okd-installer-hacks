@@ -6,8 +6,9 @@ HAProxy exposes openshift running on a libvirt network to the outside world.
 ```
 # find the apache pids
 ps -e | grep httpd
+
 # kill the first one, e.g.
-kill <pid number>
+kill $(ps -e | grep httpd | head -n 1 | awk '{print $1;}')
 ```
 
 Install haproxy:
@@ -25,7 +26,7 @@ Edit `/etc/haproxy/haproxy.cfg`
 
 Start haproxy
 ```
-vim /etc/haproxy/haproxy.cfg
+sudo curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/haproxy/haproxy.cfg > /etc/haproxy/haproxy.cfg
 systemctl enable --now haproxy.service
 ```
 
