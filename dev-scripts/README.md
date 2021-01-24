@@ -91,7 +91,11 @@ oc --kubeconfig ~/dev-scripts/ocp/ostest/auth/kubeconfig get pods --all-namespac
 make clean
 sudo rm -rf /opt/dev-scripts /opt/metal3-dev-env logs/*
 sudo rm -rf /var/lib/libvirt/images/worker_*
+
+# Get cluster password
+cat ~dev/dev-scripts/ocp/ostest/auth/kubeadmin-password ; echo;
 ```
+
 
 ## Add storage to workers
 
