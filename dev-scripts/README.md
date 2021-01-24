@@ -15,7 +15,7 @@ https://cloud.redhat.com/openshift/install/rhv/installer-provisioned
 ``` bash
 # Subscribe RHEL
 subscription-manager register --serverurl subscription.rhsm.stage.redhat.com --username xxxx --password xxxx --auto-attach
-# dnf update -y
+dnf update -y
 
 # Make sure all disk is usable for root fs
 umount /home
@@ -50,6 +50,7 @@ reboot
 
 virt-host-validate
 systemctl status libvirtd
+cat /sys/module/kvm_intel/parameters/nested # should return 1
 ```
 
 ## Dev scripts
@@ -99,10 +100,10 @@ sudo rm -rf /var/lib/libvirt/images/worker_*
 # Create disks
 qemu-img create -f qcow2 worker_0.qcow2 800G
 qemu-img create -f qcow2 worker_1.qcow2 800G
-qemu-img create -f qcow2 worker_2.qcow2 800G
-qemu-img create -f qcow2 worker_3.qcow2 800G
-qemu-img create -f qcow2 worker_4.qcow2 800G
-qemu-img create -f qcow2 worker_5.qcow2 800G
+#qemu-img create -f qcow2 worker_2.qcow2 800G
+#qemu-img create -f qcow2 worker_3.qcow2 800G
+#qemu-img create -f qcow2 worker_4.qcow2 800G
+#qemu-img create -f qcow2 worker_5.qcow2 800G
 chmod ugo+rwx worker_*
 
 # rm /var/lib/libvirt/images/worker_*
@@ -112,10 +113,10 @@ mv worker_* /var/lib/libvirt/images/
 ls /var/lib/libvirt/images/
 virsh attach-disk ostest_worker_0 /var/lib/libvirt/images/worker_0.qcow2 vda --persistent --live --subdriver qcow2
 virsh attach-disk ostest_worker_1 /var/lib/libvirt/images/worker_1.qcow2 vda --persistent --live --subdriver qcow2
-virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --persistent --live --subdriver qcow2
-virsh attach-disk ostest_worker_3 /var/lib/libvirt/images/worker_3.qcow2 vda --persistent --live --subdriver qcow2
-virsh attach-disk ostest_worker_4 /var/lib/libvirt/images/worker_4.qcow2 vda --persistent --live --subdriver qcow2
-virsh attach-disk ostest_worker_5 /var/lib/libvirt/images/worker_5.qcow2 vda --persistent --live --subdriver qcow2
+#virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --persistent --live --subdriver qcow2
+#virsh attach-disk ostest_worker_3 /var/lib/libvirt/images/worker_3.qcow2 vda --persistent --live --subdriver qcow2
+#virsh attach-disk ostest_worker_4 /var/lib/libvirt/images/worker_4.qcow2 vda --persistent --live --subdriver qcow2
+#virsh attach-disk ostest_worker_5 /var/lib/libvirt/images/worker_5.qcow2 vda --persistent --live --subdriver qcow2
 
 # Check is /dev/vda is available as a worker disk
 ssh core@192.168.111.23 -i ~dev/.ssh/id_rsa
