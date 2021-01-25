@@ -27,31 +27,12 @@ vim /etc/default/grub
 # Add intel_iommu=on to GRUB_CMDLINE_LINUX
 grub2-mkconfig -o /boot/grub2/grub.cfg
 
-# Install virtualization
+# Install git
 dnf update -y
 dnf install -y git make wget jq
-# dnf install virt-install golang-bin gcc-c++ libvirt-devel libvirt libvirt-devel libvirt-daemon-kvm qemu-kvm git -y
-
-systemctl enable --now libvirtd
-systemctl enable --now firewalld
-
-DEFAULT_ZONE=$(sudo firewall-cmd --get-default-zone)
-firewall-cmd --add-rich-rule "rule service name="libvirt" reject" --permanent
-firewall-cmd --zone=$DEFAULT_ZONE --add-service=libvirt --permanent
-firewall-cmd --zone=$DEFAULT_ZONE --change-interface=tt0  --permanent
-firewall-cmd --zone=$DEFAULT_ZONE --change-interface=virbr0  --permanent
-
-# Remove beaker temp repo
-rm -rf /etc/yum.repos.d/beaker-tasks.repo
 
 # Reboot and check virtualization
 reboot
-# Set iptables after reboot
-# iptables -I INPUT -p tcp -s 192.168.126.0/24 -d 192.168.122.1 --dport 16509 -j ACCEPT -m comment --comment "Allow insecure libvirt clients"
-
-virt-host-validate
-systemctl status libvirtd
-cat /sys/module/kvm_intel/parameters/nested # should return 1
 ```
 
 ## Dev scripts
@@ -66,9 +47,6 @@ echo '%wheel ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
 ``` bash
 su - dev
 ssh-keygen
-
-# git config --global user.email xxxx
-# git config --global user.name xxxx
 
 git clone https://github.com/openshift-metal3/dev-scripts.git
 cd dev-scripts
@@ -106,9 +84,6 @@ cat ~dev/dev-scripts/ocp/ostest/auth/kubeadmin-password ; echo;
 qemu-img create -f qcow2 worker_0.qcow2 500G
 qemu-img create -f qcow2 worker_1.qcow2 500G
 qemu-img create -f qcow2 worker_2.qcow2 500G
-#qemu-img create -f qcow2 worker_3.qcow2 500G
-#qemu-img create -f qcow2 worker_4.qcow2 500G
-#qemu-img create -f qcow2 worker_5.qcow2 500G
 chmod ugo+rwx worker_*
 
 # rm /var/lib/libvirt/images/worker_*
@@ -119,9 +94,6 @@ ls /var/lib/libvirt/images/
 virsh attach-disk ostest_worker_0 /var/lib/libvirt/images/worker_0.qcow2 vda --persistent --live --subdriver qcow2
 virsh attach-disk ostest_worker_1 /var/lib/libvirt/images/worker_1.qcow2 vda --persistent --live --subdriver qcow2
 virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --persistent --live --subdriver qcow2
-#virsh attach-disk ostest_worker_3 /var/lib/libvirt/images/worker_3.qcow2 vda --persistent --live --subdriver qcow2
-#virsh attach-disk ostest_worker_4 /var/lib/libvirt/images/worker_4.qcow2 vda --persistent --live --subdriver qcow2
-#virsh attach-disk ostest_worker_5 /var/lib/libvirt/images/worker_5.qcow2 vda --persistent --live --subdriver qcow2
 
 # Check is /dev/vda is available as a worker disk
 ssh core@192.168.111.23 -i ~dev/.ssh/id_rsa
