@@ -99,3 +99,12 @@ virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --p
 ssh core@192.168.111.23 -i ~dev/.ssh/id_rsa
 sudo fdisk -l
 ```
+
+## To Do
+
+(cron job for libvirt)
+haproxy
+ceph
+kubevirt
+oauth-test
+dev-template
