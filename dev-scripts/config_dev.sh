@@ -13,6 +13,9 @@ export MASTER_DISK=20
 export MASTER_VCPU=4
 
 export IP_STACK=v4
+# min 3 workers for ceph
 export NUM_WORKERS=3
+# min 2Gi for virtualization
 export WORKER_MEMORY=65536
+# default is to use CI nightly
 # export OPENSHIFT_RELEASE_IMAGE='quay.io/openshift-release-dev/ocp-release:4.4.0-rc.10-x86_64'
