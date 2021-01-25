@@ -61,15 +61,15 @@ vim pull_secret.json
 # Build
 make
 
-# Check health
-sudo virsh list --all
-oc --kubeconfig ~/dev-scripts/ocp/ostest/auth/kubeconfig get co --all-namespaces
-oc --kubeconfig ~/dev-scripts/ocp/ostest/auth/kubeconfig get pods --all-namespaces
-
 # Cleanup
 make clean
 sudo rm -rf /opt/dev-scripts /opt/metal3-dev-env logs/*
 sudo rm -rf /var/lib/libvirt/images/worker_*
+
+# Check health
+sudo virsh list --all
+oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get co --all-namespaces
+oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get pods --all-namespaces
 
 # Get cluster password
 cat ~dev/dev-scripts/ocp/ostest/auth/kubeadmin-password ; echo;
