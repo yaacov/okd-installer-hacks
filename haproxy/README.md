@@ -23,6 +23,7 @@ firewall-cmd --zone=$DEFAULT_ZONE --add-port=443/tcp --permanent
 firewall-cmd --zone=$DEFAULT_ZONE --add-port=6443/tcp --permanent
 firewall-cmd --zone=$DEFAULT_ZONE --add-port=80/tcp --permanent
 firewall-cmd --zone=$DEFAULT_ZONE --add-port=9000/tcp --permanent
+firewall-cmd --zone=$DEFAULT_ZONE --add-port=20000-22000/tcp --permanent
 
 firewall-cmd --reload
 ```
