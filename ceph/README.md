@@ -17,6 +17,11 @@ oc create -f pool.yaml
 oc create -f storageclass.yaml
 ```
 
+## Local storage
+
+``` bash
+oc create -f https://raw.githubusercontent.com/kubevirt/kubevirt.github.io/master/labs/manifests/storage-setup.yml
+```
 ## Debug
 
 ``` bash
