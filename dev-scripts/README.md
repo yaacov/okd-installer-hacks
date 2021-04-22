@@ -48,7 +48,7 @@ reboot
 
 ``` bash
 su - dev
-ssh-keygen
+ssh-keygen -P "" -f ~/.ssh/id_rsa
 
 git clone https://github.com/openshift-metal3/dev-scripts.git
 cd dev-scripts
