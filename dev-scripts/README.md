@@ -19,7 +19,7 @@ subscription-manager register --serverurl subscription.rhsm.stage.redhat.com --u
 # Make sure all disk is usable for root fs
 umount /home
 lvremove $(ls /dev/mapper/rhel_dell--r640--* -l | grep -- -home | awk '{print $9;}') -y
-lvextend -l +100%FREE -r $(ls /dev/mapper/rhel_dell--r640--* -l | grep -- -root | awk '{print $9;}')
+lvextend -l +100%FREE -r $(ls /dev/mapper/rhel_dell--r* -l | grep -- -root | awk '{print $9;}')
 vim /etc/fstab # remove home
 
 # Setup pass throgh virtualization
