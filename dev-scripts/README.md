@@ -30,12 +30,7 @@ grub2-mkconfig -o /boot/grub2/grub.cfg
 # Install git
 dnf update -y
 dnf install -y git make wget jq
-
-# Reboot and check virtualization
-reboot
 ```
-
-## Dev scripts
 
 ``` bash
 # Setup dev user
@@ -43,6 +38,13 @@ adduser dev
 usermod -aG wheel dev
 echo '%wheel ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
 ```
+
+```
+# Reboot and check virtualization
+reboot
+```
+
+## Dev scripts
 
 ``` bash
 su - dev
