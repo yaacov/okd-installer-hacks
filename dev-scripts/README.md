@@ -20,10 +20,10 @@ subscription-manager register --serverurl subscription.rhsm.stage.redhat.com --u
 umount /home
 lvremove $(ls /dev/mapper/rhel_dell--r* -l | grep -- -home | awk '{print $9;}') -y
 lvextend -l +100%FREE -r $(ls /dev/mapper/rhel_dell--r* -l | grep -- -root | awk '{print $9;}')
-vim /etc/fstab # remove home
+sed -i '/[/]home/ s/./#&/' /etc/fstab
 
 # Setup pass throgh virtualization
-vim /etc/default/grub
+sed -i '/^GRUB_CMDLINE_LINUX/ s/console=ttyS1,115200/& intel_iommu=on/' /etc/default/grub
 # Add intel_iommu=on to GRUB_CMDLINE_LINUX
 grub2-mkconfig -o /boot/grub2/grub.cfg
 
