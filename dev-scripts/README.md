@@ -54,6 +54,7 @@ git clone https://github.com/openshift-metal3/dev-scripts.git
 cd dev-scripts
 
 # Edit cluster (dont forget to set CI TOKEN at the top fo the file)
+# https://console-openshift-console.apps.ci.l2s4.p1.openshiftapps.com/
 # https://openshift-release.apps.ci.l2s4.p1.openshiftapps.com/
 cp config_example.sh config_dev.sh
 vim config_dev.sh
