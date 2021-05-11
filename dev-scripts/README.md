@@ -18,8 +18,8 @@ subscription-manager register --serverurl subscription.rhsm.stage.redhat.com --u
 
 # Make sure all disk is usable for root fs
 umount /home
-lvremove $(ls /dev/mapper/rhel_dell--r* -l | grep -- -home | awk '{print $9;}') -y
-lvextend -l +100%FREE -r $(ls /dev/mapper/rhel_dell--r* -l | grep -- -root | awk '{print $9;}')
+lvremove $(ls /dev/mapper/*_dell--r* -l | grep -- -home | awk '{print $9;}') -y
+lvextend -l +100%FREE -r $(ls /dev/mapper/*_dell--r* -l | grep -- -root | awk '{print $9;}')
 sed -i '/[/]home/ s/./#&/' /etc/fstab
 
 # Setup pass throgh virtualization
