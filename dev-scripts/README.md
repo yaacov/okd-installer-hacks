@@ -104,6 +104,22 @@ ssh core@192.168.111.23 -i ~dev/.ssh/id_rsa
 sudo fdisk -l
 ```
 
+```
+# If live attach-disk fails
+virsh destroy ostest_worker_0
+virsh attach-disk ostest_worker_0 /var/lib/libvirt/images/worker_0.qcow2 vda --persistent --config --subdriver qcow2
+virsh start ostest_worker_0
+oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get node
+
+virsh destroy ostest_worker_1
+virsh attach-disk ostest_worker_1 /var/lib/libvirt/images/worker_1.qcow2 vda --persistent --config --subdriver qcow2
+virsh start ostest_worker_1
+
+virsh destroy ostest_worker_2
+virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --persistent --config --subdriver qcow2
+virsh start ostest_worker_2
+```
+
 ## To Do
 
 (cron job for libvirt)
