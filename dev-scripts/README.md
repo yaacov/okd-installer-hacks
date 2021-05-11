@@ -109,7 +109,9 @@ sudo fdisk -l
 virsh destroy ostest_worker_0
 virsh attach-disk ostest_worker_0 /var/lib/libvirt/images/worker_0.qcow2 vda --persistent --config --subdriver qcow2
 virsh start ostest_worker_0
-oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get node
+
+# Wait for the node to be ready
+oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get nodes
 
 virsh destroy ostest_worker_1
 virsh attach-disk ostest_worker_1 /var/lib/libvirt/images/worker_1.qcow2 vda --persistent --config --subdriver qcow2
