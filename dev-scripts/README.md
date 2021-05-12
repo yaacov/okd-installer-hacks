@@ -121,6 +121,14 @@ virsh start ostest_worker_1
 virsh destroy ostest_worker_2
 virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --persistent --config --subdriver qcow2
 virsh start ostest_worker_2
+
+virsh destroy ostest_worker_3
+virsh attach-disk ostest_worker_3 /var/lib/libvirt/images/worker_3.qcow2 vda --persistent --config --subdriver qcow2
+virsh start ostest_worker_3
+
+virsh destroy ostest_worker_4
+virsh attach-disk ostest_worker_4 /var/lib/libvirt/images/worker_4.qcow2 vda --persistent --config --subdriver qcow2
+virsh start ostest_worker_4
 ```
 
 ## To Do
