@@ -31,5 +31,5 @@ firewall-cmd --reload
 # Get IP addresses of the nodes
 # Edit haproxy config file, to bind to this adresses
 virsh net-list
-virsh net-dhcp-leases networkNameHere
+virsh net-dhcp-leases ostestbm
 ```
