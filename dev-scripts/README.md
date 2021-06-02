@@ -28,7 +28,7 @@ sed -i '/^GRUB_CMDLINE_LINUX/ s/console=ttyS1,115200/& intel_iommu=on/' /etc/def
 grub2-mkconfig -o /boot/grub2/grub.cfg
 
 # Remove beaker tasks repo
-rm /etc/yum.repos.d/beaker-tasks.repo
+rm -f /etc/yum.repos.d/beaker-tasks.repo
 
 # Install git
 dnf update -y
