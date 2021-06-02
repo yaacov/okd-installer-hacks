@@ -27,3 +27,9 @@ firewall-cmd --zone=$DEFAULT_ZONE --add-port=20000-50000/tcp --permanent
 firewall-cmd --reload
 ```
 
+```
+# Get IP addresses of the nodes
+# Edit haproxy config file, to bind to this adresses
+virsh net-list
+virsh net-dhcp-leases networkNameHere
+```
