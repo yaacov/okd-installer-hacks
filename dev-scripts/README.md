@@ -115,23 +115,28 @@ virsh attach-disk ostest_worker_0 /var/lib/libvirt/images/worker_0.qcow2 vda --p
 virsh start ostest_worker_0
 
 # Wait for the node to be ready
-oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get nodes
+oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get nodes -w
 
 virsh destroy ostest_worker_1
 virsh attach-disk ostest_worker_1 /var/lib/libvirt/images/worker_1.qcow2 vda --persistent --config --subdriver qcow2
 virsh start ostest_worker_1
+oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get nodes -w
 
 virsh destroy ostest_worker_2
 virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --persistent --config --subdriver qcow2
 virsh start ostest_worker_2
+oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get nodes -w
 
 virsh destroy ostest_worker_3
 virsh attach-disk ostest_worker_3 /var/lib/libvirt/images/worker_3.qcow2 vda --persistent --config --subdriver qcow2
 virsh start ostest_worker_3
+oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get nodes -w
 
 virsh destroy ostest_worker_4
 virsh attach-disk ostest_worker_4 /var/lib/libvirt/images/worker_4.qcow2 vda --persistent --config --subdriver qcow2
 virsh start ostest_worker_4
+oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get nodes -w
+
 ```
 
 ## To Do
