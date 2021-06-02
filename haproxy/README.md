@@ -2,7 +2,6 @@
 
 HAProxy exposes openshift running on a libvirt network to the outside world.
 
-### If apache is taking port 80 (on RHEL from PXE):
 ```
 # Kill httpd server if running
 kill $(ps -e | grep httpd | head -n 1 | awk '{print $1;}')
