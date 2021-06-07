@@ -1,6 +1,14 @@
 # Install kubevirt
 
 ``` bash
+# HCO - operator that install kubevirt + evrything
+git clone git@github.com:kubevirt/hyperconverged-cluster-operator.git
+
+cd hyperconverged-cluster-operator
+bash deploy/deploy.sh
+```
+
+``` bash
 # Kubevirt
 export RELEASE=$(curl -s https://github.com/kubevirt/kubevirt/releases/latest | grep -o "v[0-9]\.[0-9]*\.[0-9]*")
 echo $RELEASE
