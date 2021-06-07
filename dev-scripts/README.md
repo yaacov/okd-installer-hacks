@@ -129,7 +129,7 @@ virsh destroy ostest_worker_2
 virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --persistent --config --subdriver qcow2
 virsh start ostest_worker_2
 oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig wait node worker-2.ostest.test.metalkube.org --for=condition=Ready=false
-oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig wait node worker-3.ostest.test.metalkube.org --for=condition=Ready
+oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig wait node worker-2.ostest.test.metalkube.org --for=condition=Ready
 
 virsh destroy ostest_worker_3
 virsh attach-disk ostest_worker_3 /var/lib/libvirt/images/worker_3.qcow2 vda --persistent --config --subdriver qcow2
