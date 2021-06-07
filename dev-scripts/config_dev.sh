@@ -12,8 +12,7 @@
 #export MASTER_DISK=85
 #export MASTER_VCPU=4
 
-export IP_STACK=v4
-#export IP_STACK=v4v6
+export IP_STACK=v4v6
 export NUM_WORKERS=3
 export WORKER_MEMORY=65536
 export WORKER_DISK=85
