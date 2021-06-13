@@ -85,8 +85,8 @@ cat ~dev/dev-scripts/ocp/ostest/auth/kubeadmin-password ; echo;
 
 ``` bash
 oc create namespace openshift-cnv
-# curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/dev-scripts/create namespace openshift-cnv.yeml > create namespace openshift-cnv.yeml
-oc create -f oc create namespace openshift-cnv.yeml
+# curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/dev-scripts/kubevirt-storage-class-defaults.yaml > kubevirt-storage-class-defaults.yaml
+oc create -f kubevirt-storage-class-defaults.yaml
 ```
 
 ## Add storage to workers
