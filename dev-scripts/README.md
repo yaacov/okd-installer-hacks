@@ -27,6 +27,9 @@ sed -i '/^GRUB_CMDLINE_LINUX/ s/console=ttyS1,115200/& intel_iommu=on/' /etc/def
 # Add intel_iommu=on to GRUB_CMDLINE_LINUX
 grub2-mkconfig -o /boot/grub2/grub.cfg
 
+# Anable nested option for kvm
+echo "options kvm_intel nested=1" >> /etc/modprobe.d/kvm.conf
+
 # Remove beaker tasks repo
 rm -f /etc/yum.repos.d/beaker-tasks.repo
 
