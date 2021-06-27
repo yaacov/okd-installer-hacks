@@ -33,3 +33,8 @@ firewall-cmd --reload
 virsh net-list
 virsh net-dhcp-leases ostestbm
 ```
+
+```
+# Remove the old line from ssh/known_hosts
+sed -i '/modi07.eng.lab.tlv.redhat.com/d' /home/yzamir/.ssh/known_hosts
+```
