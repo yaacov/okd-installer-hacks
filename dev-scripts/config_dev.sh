@@ -15,6 +15,5 @@
 export IP_STACK=v4v6
 export NUM_WORKERS=3
 export WORKER_MEMORY=65536
-export WORKER_DISK=85
 # export BASE_DOMAIN="40.0.0.54.nip.io"
 # export OPENSHIFT_RELEASE_IMAGE='quay.io/openshift-release-dev/ocp-release:4.4.0-rc.10-x86_64'
