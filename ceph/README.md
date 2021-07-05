@@ -15,13 +15,12 @@ oc create -f operator-openshift.yaml
 oc create -f cluster.yaml
 oc create -f pool.yaml
 oc create -f storageclass.yaml
+
+cd csi/rbd
+oc create -f storageclass.yaml 
+oc create -f snapshotclass.yaml 
 ```
 
-## Local storage
-
-``` bash
-oc create -f https://raw.githubusercontent.com/kubevirt/kubevirt.github.io/master/labs/manifests/storage-setup.yml
-```
 ## Debug
 
 ``` bash
