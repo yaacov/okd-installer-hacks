@@ -92,57 +92,6 @@ oc create namespace openshift-cnv
 oc create -f kubevirt-storage-class-defaults.yaml
 ```
 
-## Add storage to workers
-
-``` bash
-
-# Create disks
-qemu-img create -f qcow2 worker_0.qcow2 500G
-qemu-img create -f qcow2 worker_1.qcow2 500G
-qemu-img create -f qcow2 worker_2.qcow2 500G
-chmod ugo+rwx worker_*
-
-# rm /var/lib/libvirt/images/worker_*
-mv worker_* /var/lib/libvirt/images/
-
-# Attach disks
-ls /var/lib/libvirt/images/
-virsh attach-disk ostest_worker_0 /var/lib/libvirt/images/worker_0.qcow2 vda --persistent --live --subdriver qcow2
-virsh attach-disk ostest_worker_1 /var/lib/libvirt/images/worker_1.qcow2 vda --persistent --live --subdriver qcow2
-virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --persistent --live --subdriver qcow2
-
-# Check is /dev/vda is available as a worker disk
-ssh core@192.168.111.23 -i ~dev/.ssh/id_rsa
-sudo fdisk -l
-```
-
-```
-# Wait for all nodes to be ready
-oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get nodes -w
-
-# If live attach-disk fails
-virsh destroy ostest_worker_0
-virsh attach-disk ostest_worker_0 /var/lib/libvirt/images/worker_0.qcow2 vda --persistent --config --subdriver qcow2
-virsh start ostest_worker_0
-
-# Wait for the node to be ready
-oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get nodes -w
-
-virsh destroy ostest_worker_1
-virsh attach-disk ostest_worker_1 /var/lib/libvirt/images/worker_1.qcow2 vda --persistent --config --subdriver qcow2
-virsh start ostest_worker_1
-
-# Wait for the node to be ready
-oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get nodes -w
-
-virsh destroy ostest_worker_2
-virsh attach-disk ostest_worker_2 /var/lib/libvirt/images/worker_2.qcow2 vda --persistent --config --subdriver qcow2
-virsh start ostest_worker_2
-
-# Wait for the node to be ready
-oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get nodes -w
-```
-
 ## To Do
 
 (cron job for libvirt)
