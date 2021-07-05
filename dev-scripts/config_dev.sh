@@ -12,8 +12,15 @@
 #export MASTER_DISK=85
 #export MASTER_VCPU=4
 
+# Add extra disks for ceph to use
+export VM_EXTRADISKS=true
+export VM_EXTRADISKS_LIST="vdb"
+export VM_EXTRADISKS_SIZE="100G"
+
 export IP_STACK=v4v6
+# Need 3 workers for ceph to work
 export NUM_WORKERS=3
+# Need large memory in workers to make virutalization work
 export WORKER_MEMORY=65536
 # export BASE_DOMAIN="40.0.0.54.nip.io"
 # export OPENSHIFT_RELEASE_IMAGE='quay.io/openshift-release-dev/ocp-release:4.4.0-rc.10-x86_64'
