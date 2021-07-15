@@ -84,7 +84,7 @@ cat ~dev/dev-scripts/ocp/ostest/auth/kubeconfig | grep :6443
 ```
 
 ```
-# Cleanup
+# Cleanup (none-reversable, remove and delete the cluster and free up disk space)
 make clean
 sudo rm -rf /opt/dev-scripts /opt/metal3-dev-env logs/*
 sudo rm -rf /var/lib/libvirt/images/worker_*
