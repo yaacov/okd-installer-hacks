@@ -72,11 +72,6 @@ vim pull_secret.json
 # Build
 make
 
-# Cleanup
-make clean
-sudo rm -rf /opt/dev-scripts /opt/metal3-dev-env logs/*
-sudo rm -rf /var/lib/libvirt/images/worker_*
-
 # Check health
 sudo virsh list --all
 oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get co --all-namespaces
@@ -84,19 +79,14 @@ oc --kubeconfig ~dev/dev-scripts/ocp/ostest/auth/kubeconfig get pods --all-names
 
 # Get cluster password
 cat ~dev/dev-scripts/ocp/ostest/auth/kubeadmin-password ; echo;
+# Get cluster api server
+cat ~dev/dev-scripts/ocp/ostest/auth/kubeconfig | grep :6443
 ```
 
-``` bash
-oc create namespace openshift-cnv
-# curl https://raw.githubusercontent.com/yaacov/okd-installer-hacks/master/dev-scripts/kubevirt-storage-class-defaults.yaml > kubevirt-storage-class-defaults.yaml
-oc create -f kubevirt-storage-class-defaults.yaml
+```
+# Cleanup
+make clean
+sudo rm -rf /opt/dev-scripts /opt/metal3-dev-env logs/*
+sudo rm -rf /var/lib/libvirt/images/worker_*
 ```
 
-## To Do
-
-(cron job for libvirt)
-haproxy
-ceph
-kubevirt
-oauth-test
-dev-template
