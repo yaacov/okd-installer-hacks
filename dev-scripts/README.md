@@ -83,6 +83,7 @@ cat ~dev/dev-scripts/ocp/ostest/auth/kubeadmin-password ; echo;
 cat ~dev/dev-scripts/ocp/ostest/auth/kubeconfig | grep :6443
 ```
 
+## Delete cluster
 ```
 # Cleanup (none-reversable, remove and delete the cluster and free up disk space)
 make clean
