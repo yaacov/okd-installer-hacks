@@ -27,6 +27,7 @@ firewall-cmd --zone=$DEFAULT_ZONE --add-port=20000-50000/tcp --permanent
 firewall-cmd --reload
 ```
 
+## Debug libvirt net
 ```
 # Get IP addresses of the nodes
 # Edit haproxy config file, to bind to this adresses
@@ -34,7 +35,3 @@ virsh net-list
 virsh net-dhcp-leases ostestbm
 ```
 
-```
-# Remove the old line from ssh/known_hosts
-sed -i '/modi07.eng.lab.tlv.redhat.com/d' /home/yzamir/.ssh/known_hosts
-```
