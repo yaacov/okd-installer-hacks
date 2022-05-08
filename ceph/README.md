@@ -1,7 +1,7 @@
 # Install ceph
 
 ``` bash
-export RELEASE=$(curl -s https://github.com/rook/rook/releases/latest  | grep -o "v[0-9]\.[0-9]*\.[0-9]*")
+export RELEASE=$(curl -sL https://github.com/rook/rook/releases/latest  | grep -o "v[0-9]\.[0-9]*\.[0-9]*" | head -n 1 - )
 echo $RELEASE
 
 git clone --single-branch --branch $RELEASE https://github.com/rook/rook.git
