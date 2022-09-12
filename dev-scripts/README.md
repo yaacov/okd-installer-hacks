@@ -23,7 +23,7 @@ lvextend -l +100%FREE -r $(ls /dev/mapper/*_dell--r* -l | grep -- -root | awk '{
 sed -i '/[/]home/ s/./#&/' /etc/fstab
 
 # Setup pass throgh virtualization
-sed -i '/^GRUB_CMDLINE_LINUX/ s/console=ttyS1,115200/& intel_iommu=on/' /etc/default/grub
+sed -i '/^GRUB_CMDLINE_LINUX/ s/console=ttyS1,115200/& intel_iommu=on iommu=pt/' /etc/default/grub
 # Add intel_iommu=on to GRUB_CMDLINE_LINUX
 grub2-mkconfig -o /boot/grub2/grub.cfg
 
