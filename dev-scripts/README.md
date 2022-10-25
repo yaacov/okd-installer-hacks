@@ -13,8 +13,18 @@ https://cloud.redhat.com/openshift/install/rhv/installer-provisioned
 ## Install and init RHEL 8
 
 ``` bash
+# !! ALWAYS USE tmux WHEN USING SSH !!
+dnf install tmux
+
 # Subscribe RHEL
 subscription-manager register --serverurl subscription.rhsm.stage.redhat.com --username xxxx --password xxxx --auto-attach
+
+# If using CentOS-8 , migrate to stream
+# dnf update
+# dnf in centos-release-stream
+# dnf swap centos-linux-repos centos-stream-repos
+# dnf distro-sync
+# systemctl reboot
 
 # Make sure all disk is usable for root fs
 umount /home
