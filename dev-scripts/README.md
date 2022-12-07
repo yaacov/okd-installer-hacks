@@ -45,7 +45,7 @@ rm -f /etc/yum.repos.d/beaker-tasks.repo
 
 # Install git
 dnf update -y
-dnf install -y git make wget jq
+dnf install -y git make wget jq tmux
 ```
 
 ``` bash
